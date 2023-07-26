@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:iron/common/vo/Song.dart';
+import 'package:iron/common/models/Song.dart';
 import 'package:iron/router/app_pages.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -52,7 +52,7 @@ class BottomPlayerBarLogic extends GetxController {
 
   void _init() async {
     _audioPlayer = AudioPlayer();
-    await AudioPlayer.clearAssetCache();
+    // await AudioPlayer.clearAssetCache();
     _setInitialPlaylist();
 
     _listenForChangesInPlayerPosition();
