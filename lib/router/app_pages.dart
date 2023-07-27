@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
+import 'package:iron/pages/album_detail/view.dart';
+import 'package:iron/pages/artist_detail/view.dart';
 import 'package:iron/pages/home/view.dart';
 import 'package:iron/pages/player/view.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = AppRoutes.Home;
+  static const INITIAL = AppRoutes.Artist;
 
   static final routes = [
     GetPage(
@@ -15,7 +17,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.Player,
       page: () => PlayerPage(),
-      // transition: Transition.downToUp,
+    ),
+    GetPage(
+      name: AppRoutes.Album,
+      page: () => AlbumDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.Artist,
+      page: () => ArtistDetailPage(),
     ),
   ];
 }
