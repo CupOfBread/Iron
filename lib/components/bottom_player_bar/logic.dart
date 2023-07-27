@@ -133,8 +133,6 @@ class BottomPlayerBarLogic extends GetxController {
       // update current song title
       final currentItem = sequenceState.currentSource;
 
-      print("currentItem: "+currentItem?.tag);
-
 
       // final title = currentItem?.tag as String?;
       // currentSongNotifier.value.songTitle = title ?? '';
@@ -173,7 +171,6 @@ class BottomPlayerBarLogic extends GetxController {
   }
 
   void onPreviousSongButtonPressed() {
-    print(onPreviousSongButtonPressed);
     _audioPlayer.seekToPrevious();
   }
 

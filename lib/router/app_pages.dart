@@ -7,7 +7,7 @@ import 'package:iron/pages/player/view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = AppRoutes.Artist;
+  static const INITIAL = AppRoutes.Home;
 
   static final routes = [
     GetPage(

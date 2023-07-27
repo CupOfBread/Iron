@@ -34,7 +34,7 @@ class AlbumDetailPage extends StatelessWidget {
                     },
                     blendMode: BlendMode.dstIn,
                     child: Image.network(
-                      'https://p2.music.126.net/uAfW09c_7PJ18bvwFspYQw==/109951166162939168.jpg?param=600y600',
+                      'http://p2.music.126.net/3MQls4eG_yJR_HaYXPMWlA==/109951168728387752.jpg?param=530y530',
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
@@ -109,7 +109,7 @@ class AlbumDetailPage extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
-                                'https://p2.music.126.net/uAfW09c_7PJ18bvwFspYQw==/109951166162939168.jpg?param=600y600',
+                                'http://p2.music.126.net/3MQls4eG_yJR_HaYXPMWlA==/109951168728387752.jpg?param=530y530',
                                 width: double.infinity,
                                 height: double.infinity,
                                 fit: BoxFit.cover,
@@ -131,7 +131,7 @@ class AlbumDetailPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Joanne (Deluxe)',
+                                    'Speak Now (Taylor\'s Version)',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -142,7 +142,7 @@ class AlbumDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    'Lady Gaga',
+                                    'Taylor Swift',
                                     style: TextStyle(
                                       fontFamily: 'NotoSerifSC',
                                       fontWeight: FontWeight.w600,
@@ -251,7 +251,7 @@ class AlbumDetailPage extends StatelessWidget {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Diamond Heart',
+                                            'Speak Now (Taylor\'s Version)',
                                             maxLines: 1,
                                             style: TextStyle(
                                               fontFamily: 'NotoSerifSC',
@@ -261,7 +261,7 @@ class AlbumDetailPage extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            'Lady Gaga',
+                                            'Taylor Swift',
                                             maxLines: 1,
                                             style: TextStyle(
                                               fontFamily: 'NotoSerifSC',
@@ -333,7 +333,7 @@ class AlbumDetailPage extends StatelessWidget {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Dancin\' In Circles',
+                                            'Back To December (Taylor\'s Version)',
                                             maxLines: 1,
                                             style: TextStyle(
                                               fontFamily: 'NotoSerifSC',
@@ -344,7 +344,7 @@ class AlbumDetailPage extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            'Lady Gaga',
+                                            'Taylor Swift',
                                             maxLines: 1,
                                             style: TextStyle(
                                               fontFamily: 'NotoSerifSC',
@@ -421,7 +421,7 @@ class AlbumDetailPage extends StatelessWidget {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Million Reasons',
+                                            'The Story Of Us (Taylor\'s Version)',
                                             maxLines: 1,
                                             style: TextStyle(
                                               fontFamily: 'NotoSerifSC',
@@ -431,7 +431,7 @@ class AlbumDetailPage extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            'Lady Gaga',
+                                            'Taylor Swift',
                                             maxLines: 1,
                                             style: TextStyle(
                                               fontFamily: 'NotoSerifSC',

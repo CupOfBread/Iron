@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iron/router/app_pages.dart';
 
 import 'logic.dart';
 
@@ -82,43 +83,48 @@ class AlbumListComponent extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-              child: Container(
-                width: 170,
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        'http://p2.music.126.net/hLh3A_0zQqN2A7SEfAszZA==/109951168475132008.jpg?param=220y220',
-                        width: 170,
-                        height: 170,
-                        fit: BoxFit.cover,
+              child: GestureDetector(
+                onTap: (){
+                  Get.toNamed(AppRoutes.Album);
+                },
+                child: Container(
+                  width: 170,
+                  decoration: BoxDecoration(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          'http://p2.music.126.net/3MQls4eG_yJR_HaYXPMWlA==/109951168728387752.jpg?param=230y230',
+                          width: 170,
+                          height: 170,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Speak Now (Taylor\'s Version)',
-                      textAlign: TextAlign.start,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontFamily: 'NotoSerifSC',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w800,
+                      Text(
+                        'Speak Now (Taylor\'s Version)',
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'NotoSerifSC',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '15首 - Taylor Swift',
-                      style: TextStyle(
-                        fontFamily: 'NotoSerifSC',
-                        color: Color(0xFF696969),
-                        fontSize: 12,
+                      Text(
+                        '15首 - Taylor Swift',
+                        style: TextStyle(
+                          fontFamily: 'NotoSerifSC',
+                          color: Color(0xFF696969),
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
