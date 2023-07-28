@@ -1,7 +1,6 @@
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iron/pages/discover/view.dart';
 import 'package:iron/pages/player/view.dart';
 import 'package:marquee/marquee.dart';
 
@@ -55,7 +54,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
                           topRight: Radius.circular(6),
                         ),
                         child: Image.network(
-                          'https://s1.ax1x.com/2023/07/22/pCbjMUP.jpg',
+                          'http://p2.music.126.net/siZY5oHkqJhzq10eMQqMYQ==/109951168432318621.jpg?param=400y400',
                           width: 44,
                           height: 44,
                           fit: BoxFit.cover,

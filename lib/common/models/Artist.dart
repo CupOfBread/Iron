@@ -1,5 +1,8 @@
 import 'package:isar/isar.dart';
 
+part 'Artist.g.dart';
+
+@collection
 class Artist {
   //ID
   Id id = Isar.autoIncrement;

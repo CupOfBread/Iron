@@ -32,8 +32,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   get: ^4.6.5
+  get_it: ^7.6.0
   hive: ^2.2.3
   isar: ^3.1.0+1
+  path_provider: ^2.0.15
   marquee: ^2.2.3
   flutter_screenutil: ^5.8.4
   permission_handler: ^10.4.3
@@ -41,7 +43,6 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   dismissible_page: ^1.0.2
   cached_network_image: ^3.2.3
-  get_it: ^7.6.0
   audio_video_progress_bar: ^1.0.1
   just_audio: ^0.9.34
   just_audio_background: ^0.0.1-beta.10
@@ -87,8 +88,5 @@ flutter:
       fonts:
         - asset: assets/fonts/NotoSerifSC-Black.otf
         - asset: assets/fonts/NotoSerifSC-Bold.otf
-        - asset: assets/fonts/NotoSerifSC-ExtraLight.otf
-        - asset: assets/fonts/NotoSerifSC-Light.otf
-        - asset: assets/fonts/NotoSerifSC-Medium.otf
         - asset: assets/fonts/NotoSerifSC-Regular.otf
         - asset: assets/fonts/NotoSerifSC-SemiBold.otf

@@ -1,5 +1,7 @@
 import 'package:isar/isar.dart';
 
+part 'Album.g.dart';
+
 @collection
 class Album {
   //ID

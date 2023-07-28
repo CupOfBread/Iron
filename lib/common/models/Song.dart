@@ -1,5 +1,7 @@
 import 'package:isar/isar.dart';
 
+part 'Song.g.dart';
+
 @collection
 class Song {
   //ID
@@ -42,10 +44,16 @@ class Song {
   List<String>? genre;
 
   //歌曲来源
-  SongSourceType? songSourceType = SongSourceType.local;
+  @enumerated
+  SongSourceType songSourceType = SongSourceType.local;
 
   //歌曲地址
   String? path;
+
+  @override
+  String toString() {
+    return 'Song{id: $id, wyyId: $wyyId, ironId: $ironId, trackName: $trackName, artistIDs: $artistIDs, artistNames: $artistNames, trackAlias: $trackAlias, albumId: $albumId, albumName: $albumName, trackNumber: $trackNumber, albumLength: $albumLength, publishTime: $publishTime, genre: $genre, songSourceType: $songSourceType, path: $path}';
+  }
 }
 
 //歌曲来源：本地、网络

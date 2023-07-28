@@ -43,7 +43,7 @@ class PlayerPage extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.network(
-                          'https://s1.ax1x.com/2023/07/22/pCbjMUP.jpg',
+                          'http://p2.music.126.net/siZY5oHkqJhzq10eMQqMYQ==/109951168432318621.jpg?param=400y400',
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.cover,
@@ -158,7 +158,7 @@ class PlayerPage extends StatelessWidget {
                                                   borderRadius:
                                                       BorderRadius.circular(8),
                                                   child: Image.network(
-                                                    'https://s1.ax1x.com/2023/07/22/pCbjMUP.jpg',
+                                                    'http://p2.music.126.net/siZY5oHkqJhzq10eMQqMYQ==/109951168432318621.jpg?param=400y400',
                                                     width: 300,
                                                     height: 300,
                                                     fit: BoxFit.cover,
