@@ -25,6 +25,9 @@ class Song {
   //标题别名
   String? trackAlias;
 
+  //专辑图片
+  String? albumImageUrl;
+
   //专辑ID
   String? albumId;
 

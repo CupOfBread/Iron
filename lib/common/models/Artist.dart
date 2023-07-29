@@ -31,4 +31,9 @@ class Artist {
   int? albumSize;
 
   int? musicSize;
+
+  @override
+  String toString() {
+    return 'Artist{id: $id, wyyId: $wyyId, ironId: $ironId, avatarUrl: $avatarUrl, name: $name, transNames: $transNames, alias: $alias, briefDesc: $briefDesc, albumSize: $albumSize, musicSize: $musicSize}';
+  }
 }

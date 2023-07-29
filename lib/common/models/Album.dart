@@ -36,4 +36,9 @@ class Album {
 
   //发行公司
   String? company;
+
+  @override
+  String toString() {
+    return 'Album{id: $id, wyyId: $wyyId, ironId: $ironId, albumName: $albumName, albumImageUrl: $albumImageUrl, size: $size, artistIDs: $artistIDs, artistNames: $artistNames, briefDesc: $briefDesc, publishTime: $publishTime, songsIds: $songsIds, company: $company}';
+  }
 }
