@@ -341,10 +341,15 @@ class PlayerPage extends StatelessWidget {
                                       playerBarLogic.isLastSongNotifier,
                                 ),
                               ),
-                              Icon(
-                                Icons.filter_list,
-                                color: Color(0xFFF2F2F2),
-                                size: 26,
+                              IconButton(
+                                icon: Icon(
+                                  Icons.filter_list,
+                                  color: Color(0xFFF2F2F2),
+                                  size: 26,
+                                ),
+                                onPressed: () {
+                                  playerBarLogic.loadExampleData();
+                                },
                               ),
                             ],
                           ),

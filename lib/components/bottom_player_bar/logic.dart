@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:iron/common/models/Album.dart';
+import 'package:iron/common/models/Artist.dart';
 import 'package:iron/common/models/Song.dart';
 import 'package:iron/router/app_pages.dart';
+import 'package:isar/isar.dart';
 import 'package:just_audio/just_audio.dart';
 
+import 'package:iron/common/values/AlbumDataExample.dart';
+import 'package:iron/common/values/ArtistDataExample.dart';
+import 'package:iron/common/values/SongDataExample.dart';
 import 'state.dart';
 
 enum PlayerState { paused, playing, loading }
@@ -133,7 +140,6 @@ class BottomPlayerBarLogic extends GetxController {
       // update current song title
       final currentItem = sequenceState.currentSource;
 
-
       // final title = currentItem?.tag as String?;
       // currentSongNotifier.value.songTitle = title ?? '';
 
@@ -186,8 +192,22 @@ class BottomPlayerBarLogic extends GetxController {
     await _audioPlayer.setShuffleModeEnabled(enable);
   }
 
-
   void roteToPlayerPage() {
     Get.toNamed(AppRoutes.Player);
+  }
+
+  Future<void> loadExampleData() async {
+    final isar = GetIt.I<Isar>();
+    await isar.writeTxn(() async {
+      await isar.songs.putAll(SongDataExample().loadSongs());
+    });
+
+    await isar.writeTxn(() async {
+      await isar.artists.putAll(ArtistDataExample().loadArtist());
+    });
+
+    await isar.writeTxn(() async {
+      await isar.albums.putAll(AlbumDataExample().loadAlbums());
+    });
   }
 }

@@ -32,7 +32,6 @@ class BottomPlayerBarComponent extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              // logic.roteToPlayerPage();
               context.pushTransparentRoute(PlayerPage());
             },
             child: Container(

@@ -1,4 +1,4 @@
-import '../models/Song.dart';
+import 'package:iron/common/models/Song.dart';
 
 class SongDataExample {
   List<Song> loadSongs() {
