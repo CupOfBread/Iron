@@ -6,7 +6,7 @@ class AlbumDataExample {
       Album()
         ..wyyId = '168588248'
         ..albumName = 'Speak Now (Taylor\'s Version)'
-        ..artistNames=['Taylor Swift']
+        ..artistNames = ['Taylor Swift']
         ..albumImageUrl =
             'http://p1.music.126.net/3MQls4eG_yJR_HaYXPMWlA==/109951168728387752.jpg?param=400y400'
         ..size = 22
@@ -15,18 +15,35 @@ class AlbumDataExample {
       Album()
         ..wyyId = '168513433'
         ..albumName = '流沙 (Reimagined)'
-        ..artistNames=['陶喆']
+        ..artistNames = ['陶喆']
         ..albumImageUrl =
             'http://p1.music.126.net/RHvOnjS6lxCxRRXlH1FjIw==/109951168704179066.jpg?param=400y400'
         ..size = 1
         ..publishTime = DateTime(2023, 7, 3)
         ..company = 'StreetVoice/偉大文化',
       Album()
+        ..wyyId = '2643348'
+        ..albumName = '爱，不解释'
+        ..artistNames = ['张杰']
+        ..albumImageUrl =
+            'http://p2.music.126.net/mW53BkMgGy37I7yVrUg-aQ==/109951163117902077.jpg?param=300y300'
+        ..size = 9
+        ..publishTime = DateTime(2013, 12, 20)
+        ..company = '天娱传媒',
+      Album()
         ..wyyId = '1947203'
         ..albumName = 'Poker Face'
-        ..artistNames=['Lady Gaga']
+        ..artistNames = ['Lady Gaga']
         ..albumImageUrl =
-            'http://p1.music.126.net/_LZPAOkbMdb0CDL2ra0RGw==/3305131953311675.jpg?param=400y400'
+            'http://p1.music.126.net/_LZPAOkbMdb0CDL2ra0RGw==/3305131953311675.jpg?param=400y400',
+      Album()
+        ..wyyId = '6548'
+        ..albumName = '黑白灰'
+        ..artistNames = ['陈奕迅']
+        ..albumImageUrl =
+            'http://p2.music.126.net/WF9SAVpoTbueroj7CLoKKg==/109951163028210664.jpg?param=300y300'
+        ..size = 10
+        ..company = '英皇唱片',
     ];
     return albumList;
   }
