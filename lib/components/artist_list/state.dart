@@ -1,5 +1,7 @@
+import 'package:iron/common/models/Artist.dart';
+
 class ArtistListState {
-  ArtistListState() {
-    ///Initialize variables
-  }
+  late List<Artist> artistList = [];
+
+  ArtistListState() {}
 }

@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:dismissible_page/dismissible_page.dart';
+import 'package:flash/flash.dart';
+import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iron/components/bottom_player_bar/logic.dart';
@@ -177,26 +179,55 @@ class PlayerPage extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
                                                 children: [
-                                                  Icon(
-                                                    Icons.alarm,
-                                                    color: Color(0xFFF2F2F2),
-                                                    size: 32,
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons.alarm,
+                                                      color: Color(0xFFF2F2F2),
+                                                      size: 32,
+                                                    ),
+                                                    onPressed: () {},
                                                   ),
-                                                  Icon(
-                                                    Icons.replay_10,
-                                                    color: Color(0xFFF2F2F2),
-                                                    size: 34,
+                                                  IconButton(
+                                                    onPressed: () {},
+                                                    icon: Icon(
+                                                      Icons.replay_10,
+                                                      color: Color(0xFFF2F2F2),
+                                                      size: 34,
+                                                    ),
                                                   ),
-                                                  Icon(
-                                                    Icons.forward_10,
-                                                    color: Color(0xFFF2F2F2),
-                                                    size: 34,
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons.forward_10,
+                                                      color: Color(0xFFF2F2F2),
+                                                      size: 34,
+                                                    ),
+                                                    onPressed: () {},
                                                   ),
-                                                  Icon(
-                                                    Icons
-                                                        .favorite_border_rounded,
-                                                    color: Color(0xFFF2F2F2),
-                                                    size: 32,
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons
+                                                          .favorite_border_rounded,
+                                                      color: Color(0xFFF2F2F2),
+                                                      size: 32,
+                                                    ),
+                                                    onPressed: () {
+                                                      playerBarLogic
+                                                          .loadExampleData();
+                                                      context.showFlash(
+                                                          duration:
+                                                              const Duration(
+                                                                  seconds: 2),
+                                                          builder: (context,
+                                                                  controller) =>
+                                                              FlashBar(
+                                                                  position:
+                                                                      FlashPosition
+                                                                          .top,
+                                                                  controller:
+                                                                      controller,
+                                                                  content: Text(
+                                                                      '加载示例数据完成')));
+                                                    },
                                                   ),
                                                 ],
                                               ),
@@ -248,17 +279,8 @@ class PlayerPage extends StatelessWidget {
                           padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
-                                child: Icon(
-                                  Icons.shuffle_rounded,
-                                  color: Color(0xFFF2F2F2),
-                                  size: 26,
-                                ),
-                              ),
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
@@ -266,7 +288,7 @@ class PlayerPage extends StatelessWidget {
                                   builder: (_, isFirst, __) {
                                     return IconButton(
                                       icon: Icon(
-                                        Icons.skip_previous_rounded,
+                                        Icons.skip_previous,
                                         color: Color(0xFFF2F2F2),
                                         size: 40,
                                       ),
@@ -281,8 +303,8 @@ class PlayerPage extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 0, 16, 0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                 child: ValueListenableBuilder<PlayerState>(
                                     valueListenable:
                                         playerBarLogic.playerPlayButtonNotifier,
@@ -327,7 +349,7 @@ class PlayerPage extends StatelessWidget {
                                   builder: (_, isLast, __) {
                                     return IconButton(
                                       icon: Icon(
-                                        Icons.skip_next_rounded,
+                                        Icons.skip_next,
                                         color: Color(0xFFF2F2F2),
                                         size: 40,
                                       ),
@@ -340,16 +362,6 @@ class PlayerPage extends StatelessWidget {
                                   valueListenable:
                                       playerBarLogic.isLastSongNotifier,
                                 ),
-                              ),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.filter_list,
-                                  color: Color(0xFFF2F2F2),
-                                  size: 26,
-                                ),
-                                onPressed: () {
-                                  playerBarLogic.loadExampleData();
-                                },
                               ),
                             ],
                           ),

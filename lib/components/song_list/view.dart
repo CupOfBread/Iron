@@ -11,13 +11,14 @@ class SongListComponent extends StatelessWidget {
     final logic = Get.put(SongListLogic());
     final state = Get.find<SongListLogic>().state;
 
+    logic.getSongList();
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
         Container(
           width: double.infinity,
           height: 36,
-          decoration: BoxDecoration(),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,15 +42,17 @@ class SongListComponent extends StatelessWidget {
                         alignment: AlignmentDirectional(0, 0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                          child: Text(
-                            '随机播放(114)',
-                            style: TextStyle(
-                              fontFamily: 'NotoSerifSC',
-                              color: Color(0xFF696B5A),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          child: GetBuilder<SongListLogic>(builder: (logic) {
+                            return Text(
+                              '随机播放(' + state.songList.length.toString() + ')',
+                              style: TextStyle(
+                                fontFamily: 'NotoSerifSC',
+                                color: Color(0xFF696B5A),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            );
+                          }),
                         ),
                       ),
                     ],
@@ -85,111 +88,122 @@ class SongListComponent extends StatelessWidget {
             ],
           ),
         ),
-        ListView(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          children: [
-            Container(
-              width: double.infinity,
-              height: 76,
-              decoration: BoxDecoration(),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(
-                    width: MediaQuery.sizeOf(context).width * 0.88,
-                    height: double.infinity,
-                    decoration: BoxDecoration(),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 8, 0),
-                          child: Container(
-                            width: 54,
-                            height: 54,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4,
-                                  color: Color(0x5554633F),
-                                  offset: Offset(1, 2),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                'http://p2.music.126.net/vN50z_tg7JwffH0_zGdGxA==/109951168715902739.jpg?param=230y230',
+        Expanded(
+          child: GetBuilder<SongListLogic>(builder: (logic) {
+            return ListView(
+              padding: EdgeInsets.fromLTRB(
+                0,
+                0,
+                0,
+                80,
+              ),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              children: state.songList.map((item) {
+                return Container(
+                  width: double.infinity,
+                  height: 76,
+                  decoration: BoxDecoration(),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        width: MediaQuery.sizeOf(context).width * 0.88,
+                        height: double.infinity,
+                        decoration: BoxDecoration(),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 8, 0),
+                              child: Container(
                                 width: 54,
                                 height: 54,
-                                fit: BoxFit.cover,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x5554633F),
+                                      offset: Offset(1, 2),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.network(
+                                    item.albumImageUrl!,
+                                    width: 54,
+                                    height: 54,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            Expanded(
+                              child: Container(
+                                width: double.infinity,
+                                height: 50,
+                                decoration: BoxDecoration(),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.trackName!,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontFamily: 'NotoSerifSC',
+                                        color: Color(0xFF474747),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                    Text(
+                                      item.artistNames![0],
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontFamily: 'NotoSerifSC',
+                                        color: Color(0xFF767676),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: Container(
-                            width: double.infinity,
-                            height: 50,
-                            decoration: BoxDecoration(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '我们都拥有海洋 (哔哩哔哩2023毕业歌)',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontFamily: 'NotoSerifSC',
-                                    color: Color(0xFF474747),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                                Text(
-                                  '吴青峰',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontFamily: 'NotoSerifSC',
-                                    color: Color(0xFF767676),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                              ],
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: BoxDecoration(),
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                            child: Icon(
+                              Icons.more_vert,
+                              color: Color(0xFF6B6B6B),
+                              size: 22,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(),
-                      alignment: AlignmentDirectional(0, 0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                        child: Icon(
-                          Icons.more_vert,
-                          color: Color(0xFF6B6B6B),
-                          size: 22,
-                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ],
-        ),
+                );
+              }).toList(),
+            );
+          }),
+        )
       ],
     );
   }

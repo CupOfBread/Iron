@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:iron/common/models/Album.dart';
@@ -10,10 +7,10 @@ import 'state.dart';
 
 class AlbumListLogic extends GetxController {
   final AlbumListState state = AlbumListState();
-  List<Album> albumList = [];
 
-  Future<List<Album>> getAlbumList() {
+  getAlbumList() async {
     final isar = GetIt.I<Isar>();
-    return isar.albums.where().findAll();
+    state.albumList = await isar.albums.where().findAll();
+    update();
   }
 }

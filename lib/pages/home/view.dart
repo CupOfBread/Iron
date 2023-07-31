@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iron/components/bottom_bar/logic.dart';
@@ -20,6 +18,7 @@ class HomePage extends StatelessWidget {
     final navLogic = Get.put(BottomBarLogic());
     final state = Get.find<HomeLogic>().state;
     final navState = Get.find<BottomBarLogic>().state;
+    final bottomBarLogic = Get.find<BottomBarLogic>();
 
     List<Widget> pages = const [
       const DiscoverPage(),
@@ -34,9 +33,11 @@ class HomePage extends StatelessWidget {
             Container(
               width: double.infinity,
               height: double.infinity,
-              child: GetBuilder<BottomBarLogic>(builder: (navLogic) {
-                return pages[navState.currentIndex];
-              }),
+              child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: bottomBarLogic.pageController,
+                children: pages,
+              ),
             ),
             Column(
                 mainAxisSize: MainAxisSize.max,
