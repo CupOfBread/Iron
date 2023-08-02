@@ -8,50 +8,50 @@ class Song {
   Id id = Isar.autoIncrement;
 
   //网易云ID
-  String? wyyId;
+  String? wyyId = '';
 
   //烫斗ID
-  String? ironId;
+  String? ironId = '';
 
   //标题
-  String? trackName;
+  String? trackName = '';
 
   //艺人ID
-  List<String>? artistIDs;
+  List<String>? artistIDs = [];
 
   //艺人名
-  List<String>? artistNames;
+  List<String>? artistNames = [];
 
   //标题别名
-  String? trackAlias;
+  String? trackAlias = '';
 
   //专辑图片
-  String? albumImageUrl;
+  String? albumImageUrl = '';
 
   //专辑ID
-  String? albumId;
+  String? albumId = '';
 
   //专辑名
-  String? albumName;
+  String? albumName = '';
 
   //专辑内顺序
-  int? trackNumber;
+  int? trackNumber = 0;
 
   //专辑歌曲数量
-  int? albumLength;
+  int? albumLength = 0;
 
   //发布时间
-  DateTime? publishTime;
+  DateTime? publishTime = DateTime(1900);
 
   //流派
-  List<String>? genre;
+  List<String>? genre = [];
 
   //歌曲来源
   @enumerated
   SongSourceType songSourceType = SongSourceType.local;
 
   //歌曲地址
-  String? path;
+  String? path = '';
 
   @override
   String toString() {
