@@ -83,54 +83,19 @@ int _artistEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.alias.length * 3;
   {
-    final list = object.alias;
-    if (list != null) {
-      bytesCount += 3 + list.length * 3;
-      {
-        for (var i = 0; i < list.length; i++) {
-          final value = list[i];
-          bytesCount += value.length * 3;
-        }
-      }
+    for (var i = 0; i < object.alias.length; i++) {
+      final value = object.alias[i];
+      bytesCount += value.length * 3;
     }
   }
-  {
-    final value = object.avatarUrl;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.briefDesc;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.ironId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.name;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.transNames;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.wyyId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.avatarUrl.length * 3;
+  bytesCount += 3 + object.briefDesc.length * 3;
+  bytesCount += 3 + object.ironId.length * 3;
+  bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.transNames.length * 3;
+  bytesCount += 3 + object.wyyId.length * 3;
   return bytesCount;
 }
 
@@ -158,16 +123,16 @@ Artist _artistDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Artist();
-  object.albumSize = reader.readLongOrNull(offsets[0]);
-  object.alias = reader.readStringList(offsets[1]);
-  object.avatarUrl = reader.readStringOrNull(offsets[2]);
-  object.briefDesc = reader.readStringOrNull(offsets[3]);
+  object.albumSize = reader.readLong(offsets[0]);
+  object.alias = reader.readStringList(offsets[1]) ?? [];
+  object.avatarUrl = reader.readString(offsets[2]);
+  object.briefDesc = reader.readString(offsets[3]);
   object.id = id;
-  object.ironId = reader.readStringOrNull(offsets[4]);
-  object.musicSize = reader.readLongOrNull(offsets[5]);
-  object.name = reader.readStringOrNull(offsets[6]);
-  object.transNames = reader.readStringOrNull(offsets[7]);
-  object.wyyId = reader.readStringOrNull(offsets[8]);
+  object.ironId = reader.readString(offsets[4]);
+  object.musicSize = reader.readLong(offsets[5]);
+  object.name = reader.readString(offsets[6]);
+  object.transNames = reader.readString(offsets[7]);
+  object.wyyId = reader.readString(offsets[8]);
   return object;
 }
 
@@ -179,23 +144,23 @@ P _artistDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 1:
-      return (reader.readStringList(offset)) as P;
+      return (reader.readStringList(offset) ?? []) as P;
     case 2:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 5:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 6:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 7:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 8:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -289,24 +254,8 @@ extension ArtistQueryWhere on QueryBuilder<Artist, Artist, QWhereClause> {
 }
 
 extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> albumSizeIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'albumSize',
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> albumSizeIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'albumSize',
-      ));
-    });
-  }
-
   QueryBuilder<Artist, Artist, QAfterFilterCondition> albumSizeEqualTo(
-      int? value) {
+      int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'albumSize',
@@ -316,7 +265,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> albumSizeGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -329,7 +278,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> albumSizeLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -342,8 +291,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> albumSizeBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -354,22 +303,6 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> aliasIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'alias',
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> aliasIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'alias',
       ));
     });
   }
@@ -588,24 +521,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> avatarUrlIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'avatarUrl',
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> avatarUrlIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'avatarUrl',
-      ));
-    });
-  }
-
   QueryBuilder<Artist, Artist, QAfterFilterCondition> avatarUrlEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -618,7 +535,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> avatarUrlGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -633,7 +550,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> avatarUrlLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -648,8 +565,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> avatarUrlBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -734,24 +651,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> briefDescIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'briefDesc',
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> briefDescIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'briefDesc',
-      ));
-    });
-  }
-
   QueryBuilder<Artist, Artist, QAfterFilterCondition> briefDescEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -764,7 +665,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> briefDescGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -779,7 +680,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> briefDescLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -794,8 +695,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> briefDescBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -932,24 +833,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> ironIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'ironId',
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> ironIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'ironId',
-      ));
-    });
-  }
-
   QueryBuilder<Artist, Artist, QAfterFilterCondition> ironIdEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -962,7 +847,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> ironIdGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -977,7 +862,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> ironIdLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -992,8 +877,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> ironIdBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1078,24 +963,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> musicSizeIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'musicSize',
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> musicSizeIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'musicSize',
-      ));
-    });
-  }
-
   QueryBuilder<Artist, Artist, QAfterFilterCondition> musicSizeEqualTo(
-      int? value) {
+      int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'musicSize',
@@ -1105,7 +974,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> musicSizeGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1118,7 +987,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> musicSizeLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1131,8 +1000,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> musicSizeBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -1147,24 +1016,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> nameIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'name',
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> nameIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'name',
-      ));
-    });
-  }
-
   QueryBuilder<Artist, Artist, QAfterFilterCondition> nameEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1177,7 +1030,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> nameGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1192,7 +1045,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> nameLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1207,8 +1060,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> nameBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1292,24 +1145,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> transNamesIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'transNames',
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> transNamesIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'transNames',
-      ));
-    });
-  }
-
   QueryBuilder<Artist, Artist, QAfterFilterCondition> transNamesEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1322,7 +1159,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> transNamesGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1337,7 +1174,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> transNamesLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1352,8 +1189,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> transNamesBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1438,24 +1275,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> wyyIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'wyyId',
-      ));
-    });
-  }
-
-  QueryBuilder<Artist, Artist, QAfterFilterCondition> wyyIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'wyyId',
-      ));
-    });
-  }
-
   QueryBuilder<Artist, Artist, QAfterFilterCondition> wyyIdEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1468,7 +1289,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> wyyIdGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1483,7 +1304,7 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> wyyIdLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1498,8 +1319,8 @@ extension ArtistQueryFilter on QueryBuilder<Artist, Artist, QFilterCondition> {
   }
 
   QueryBuilder<Artist, Artist, QAfterFilterCondition> wyyIdBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1866,55 +1687,55 @@ extension ArtistQueryProperty on QueryBuilder<Artist, Artist, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Artist, int?, QQueryOperations> albumSizeProperty() {
+  QueryBuilder<Artist, int, QQueryOperations> albumSizeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'albumSize');
     });
   }
 
-  QueryBuilder<Artist, List<String>?, QQueryOperations> aliasProperty() {
+  QueryBuilder<Artist, List<String>, QQueryOperations> aliasProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'alias');
     });
   }
 
-  QueryBuilder<Artist, String?, QQueryOperations> avatarUrlProperty() {
+  QueryBuilder<Artist, String, QQueryOperations> avatarUrlProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'avatarUrl');
     });
   }
 
-  QueryBuilder<Artist, String?, QQueryOperations> briefDescProperty() {
+  QueryBuilder<Artist, String, QQueryOperations> briefDescProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'briefDesc');
     });
   }
 
-  QueryBuilder<Artist, String?, QQueryOperations> ironIdProperty() {
+  QueryBuilder<Artist, String, QQueryOperations> ironIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'ironId');
     });
   }
 
-  QueryBuilder<Artist, int?, QQueryOperations> musicSizeProperty() {
+  QueryBuilder<Artist, int, QQueryOperations> musicSizeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'musicSize');
     });
   }
 
-  QueryBuilder<Artist, String?, QQueryOperations> nameProperty() {
+  QueryBuilder<Artist, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
     });
   }
 
-  QueryBuilder<Artist, String?, QQueryOperations> transNamesProperty() {
+  QueryBuilder<Artist, String, QQueryOperations> transNamesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'transNames');
     });
   }
 
-  QueryBuilder<Artist, String?, QQueryOperations> wyyIdProperty() {
+  QueryBuilder<Artist, String, QQueryOperations> wyyIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'wyyId');
     });

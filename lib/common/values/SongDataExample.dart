@@ -14,6 +14,7 @@ class SongDataExample {
         ..wyyId = '1927134910'
         ..trackName = '回忆旅行'
         ..albumName = '回忆旅行'
+        ..artistIDs = ['12140120']
         ..albumImageUrl =
             'http://p1.music.126.net/Dzq7Ek9-ikTtQCQeLZXV6g==/109951167134950700.jpg?param=300y300'
         ..artistNames = ['树 Itsuki'],
@@ -114,7 +115,14 @@ class SongDataExample {
         ..albumName = '1989'
         ..albumImageUrl =
             'http://p1.music.126.net/BWyYcboEZR_YgnKJooBQjg==/109951168132553125.jpg?param=300y300'
-        ..artistNames = ['Taylor Swift']
+        ..artistNames = ['Taylor Swift'],
+      Song()
+        ..wyyId = '2059532170'
+        ..trackName = '流沙 (Reimagined)'
+        ..albumName = '流沙 (Reimagined)'
+        ..albumImageUrl =
+            'http://p1.music.126.net/RHvOnjS6lxCxRRXlH1FjIw==/109951168704179066.jpg?param=300y300'
+        ..artistNames = ['陶喆']
     ];
     return songList;
   }

@@ -4,13 +4,14 @@ class AlbumDataExample {
   List<Album> loadAlbums() {
     List<Album> albumList = [
       Album()
-        ..wyyId = '168588248'
-        ..albumName = 'Speak Now (Taylor\'s Version)'
+        ..wyyId = '2949998963'
+        ..albumName = '1989'
         ..artistNames = ['Taylor Swift']
         ..albumImageUrl =
-            'http://p1.music.126.net/3MQls4eG_yJR_HaYXPMWlA==/109951168728387752.jpg?param=400y400'
+            'http://p1.music.126.net/BWyYcboEZR_YgnKJooBQjg==/109951168132553125.jpg?param=300y300'
         ..size = 22
-        ..publishTime = DateTime(2023)
+        ..publishTime = DateTime(2019)
+        ..songsIds=['1333151467','1333151465']
         ..company = 'Taylor Swift',
       Album()
         ..wyyId = '168513433'

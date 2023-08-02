@@ -8,29 +8,29 @@ class Artist {
   Id id = Isar.autoIncrement;
 
   //网易云ID
-  String? wyyId='';
+  String wyyId = '';
 
   //烫斗ID
-  String? ironId='';
+  String ironId = '';
 
   //头像
-  String? avatarUrl='';
+  String avatarUrl = 'https://pic.imgdb.cn/item/64ca03a11ddac507cc039568.png';
 
   //艺人名
-  String? name='';
+  String name = '';
 
   //艺人名（翻译）
-  String? transNames='';
+  String transNames = '';
 
   //艺人名（别称）
-  List<String>? alias=[];
+  List<String> alias = [''];
 
   //简要描述
-  String? briefDesc='';
+  String briefDesc = '';
 
-  int? albumSize=0;
+  int albumSize = 0;
 
-  int? musicSize=0;
+  int musicSize = 0;
 
   @override
   String toString() {
