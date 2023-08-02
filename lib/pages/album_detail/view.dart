@@ -8,11 +8,15 @@ import 'logic.dart';
 class AlbumDetailPage extends StatelessWidget {
   AlbumDetailPage({Key? key}) : super(key: key);
 
-  final logic = Get.put(AlbumDetailLogic());
-  final state = Get.find<AlbumDetailLogic>().state;
-
   @override
   Widget build(BuildContext context) {
+    final logic = Get.put(AlbumDetailLogic());
+    final state = Get.find<AlbumDetailLogic>().state;
+
+    final Map details = Get.arguments as Map;
+
+    logic.initAlbumDetail(details);
+
     return Scaffold(
       body: SafeArea(
         top: true,
@@ -33,11 +37,15 @@ class AlbumDetailPage extends StatelessWidget {
                               Rect.fromLTRB(0, 0, rect.width, rect.height));
                     },
                     blendMode: BlendMode.dstIn,
-                    child: Image.network(
-                      'http://p2.music.126.net/3MQls4eG_yJR_HaYXPMWlA==/109951168728387752.jpg?param=530y530',
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
+                    child: GetBuilder<AlbumDetailLogic>(
+                      builder: (logic) {
+                        return Image.network(
+                          state.album.albumImageUrl,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        );
+                      },
                     ),
                   ),
                   Container(
@@ -72,98 +80,113 @@ class AlbumDetailPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                          child: Icon(
-                            Icons.chevron_left_rounded,
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(color: Colors.black54, blurRadius: 15.0)
-                            ],
-                            size: 40,
+                          padding: EdgeInsetsDirectional.fromSTEB(4, 0, 10, 0),
+                          child: IconButton(
+                            iconSize: 40,
+                            icon: Icon(
+                              Icons.chevron_left_rounded,
+                              color: Colors.white,
+                              shadows: [
+                                Shadow(color: Colors.black54, blurRadius: 15.0)
+                              ],
+                            ),
+                            onPressed: () {
+                              Get.back();
+                            },
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: 130,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(20, 0, 14, 0),
-                          child: Container(
-                            width: 110,
-                            height: 110,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 6,
-                                  color: Color(0x19000000),
-                                  offset: Offset(0, 2),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                'http://p2.music.126.net/3MQls4eG_yJR_HaYXPMWlA==/109951168728387752.jpg?param=530y530',
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.cover,
+                  GetBuilder<AlbumDetailLogic>(
+                    builder: (logic) {
+                      return Container(
+                        width: double.infinity,
+                        height: 130,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 0, 14, 0),
+                              child: Container(
+                                width: 110,
+                                height: 110,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 6,
+                                      color: Color(0x19000000),
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    state.album.albumImageUrl,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Speak Now (Taylor\'s Version)',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontFamily: 'NotoSerifSC',
-                                      color: Color(0xFF343434),
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w900,
-                                    ),
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        state.album.albumName,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontFamily: 'NotoSerifSC',
+                                          color: Color(0xFF343434),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                      Text(
+                                        state.album.artistNames[0],
+                                        style: TextStyle(
+                                          fontFamily: 'NotoSerifSC',
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF616161),
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                      Text(
+                                        state.album.size.toString() +
+                                            ' Songs' +
+                                            ' - ' +
+                                            state.album.publishTime.year
+                                                .toString(),
+                                        style: TextStyle(
+                                          fontFamily: 'NotoSerifSC',
+                                          color: Color(0xFF616161),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    'Taylor Swift',
-                                    style: TextStyle(
-                                      fontFamily: 'NotoSerifSC',
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xFF616161),
-                                      fontSize: 17,
-                                    ),
-                                  ),
-                                  Text(
-                                    '22 Songs - 81mins - 2023',
-                                    style: TextStyle(
-                                      fontFamily: 'NotoSerifSC',
-                                      color: Color(0xFF616161),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                   Container(
                     width: double.infinity,
@@ -184,7 +207,8 @@ class AlbumDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                 child: Icon(
                                   Icons.sort_by_alpha_rounded,
                                   color: Color(0xFF727272),
@@ -192,7 +216,8 @@ class AlbumDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 14, 0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 14, 0),
                                 child: Icon(
                                   Icons.checklist_sharp,
                                   color: Color(0xFF727272),
@@ -205,268 +230,105 @@ class AlbumDetailPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(child: ListView(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 70,
-                        decoration: BoxDecoration(),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: MediaQuery.sizeOf(context).width * 0.88,
-                              height: double.infinity,
+                  Expanded(child: GetBuilder<AlbumDetailLogic>(
+                    builder: (logic) {
+                      return ListView.builder(
+                          itemCount: state.songList.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              width: double.infinity,
+                              height: 70,
                               decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
-                                    width: 48,
-                                    height: 50,
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.88,
+                                    height: double.infinity,
                                     decoration: BoxDecoration(),
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      '1',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w800,
-                                        color: Color(0xFF2B2B2B),
-                                      ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 48,
+                                          height: 50,
+                                          decoration: BoxDecoration(),
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            (index + 1).toString(),
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w800,
+                                              color: Color(0xFF2B2B2B),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: 50,
+                                            decoration: BoxDecoration(),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  state.songList[index]
+                                                      .trackName,
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                    fontFamily: 'NotoSerifSC',
+                                                    color: Color(0xFF474747),
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  state.songList[index]
+                                                      .artistNames[0],
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                    fontFamily: 'NotoSerifSC',
+                                                    color: Color(0xFF767676),
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
                                       width: double.infinity,
-                                      height: 50,
+                                      height: double.infinity,
                                       decoration: BoxDecoration(),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Speak Now (Taylor\'s Version)',
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontFamily: 'NotoSerifSC',
-                                              color: Color(0xFF474747),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Taylor Swift',
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontFamily: 'NotoSerifSC',
-                                              color: Color(0xFF767676),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-                                        ],
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 4, 0),
+                                        child: Icon(
+                                          Icons.more_vert,
+                                          color: Color(0xFF6B6B6B),
+                                          size: 22,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                decoration: BoxDecoration(),
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                                  child: Icon(
-                                    Icons.more_vert,
-                                    color: Color(0xFF6B6B6B),
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 70,
-                        decoration: BoxDecoration(),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: MediaQuery.sizeOf(context).width * 0.88,
-                              height: double.infinity,
-                              decoration: BoxDecoration(),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 48,
-                                    height: 50,
-                                    decoration: BoxDecoration(),
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Icon(
-                                      Icons.graphic_eq_rounded,
-                                      size: 24,
-                                      color: Color(0xFF2B2B2B),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 50,
-                                      decoration: BoxDecoration(),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Back To December (Taylor\'s Version)',
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontFamily: 'NotoSerifSC',
-                                              color: Color(0xFF474747),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w800,
-
-                                            ),
-                                          ),
-                                          Text(
-                                            'Taylor Swift',
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontFamily: 'NotoSerifSC',
-                                              color: Color(0xFF767676),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300,
-
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                decoration: BoxDecoration(),
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                                  child: Icon(
-                                    Icons.more_vert,
-                                    color: Color(0xFF6B6B6B),
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 70,
-                        decoration: BoxDecoration(),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: MediaQuery.sizeOf(context).width * 0.88,
-                              height: double.infinity,
-                              decoration: BoxDecoration(),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 48,
-                                    height: 50,
-                                    decoration: BoxDecoration(),
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      '3',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w800,
-                                        color: Color(0xFF2B2B2B),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 50,
-                                      decoration: BoxDecoration(),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'The Story Of Us (Taylor\'s Version)',
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontFamily: 'NotoSerifSC',
-                                              color: Color(0xFF474747),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Taylor Swift',
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontFamily: 'NotoSerifSC',
-                                              color: Color(0xFF767676),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                decoration: BoxDecoration(),
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                                  child: Icon(
-                                    Icons.more_vert,
-                                    color: Color(0xFF6B6B6B),
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                            );
+                          });
+                    },
                   ))
                 ],
               ),

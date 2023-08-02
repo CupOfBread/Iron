@@ -98,8 +98,13 @@ class AlbumListComponent extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     children: state.albumList.map((item) {
                       return GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.Album);
+                        onTap: () async {
+                          var result = await Get.toNamed(AppRoutes.Album,
+                              arguments: {
+                                "id": item.id,
+                                "wyyId": item.wyyId,
+                                "ironId": item.ironId
+                              });
                         },
                         child: Container(
                           decoration: BoxDecoration(),
@@ -111,7 +116,7 @@ class AlbumListComponent extends StatelessWidget {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.network(
-                                  item.albumImageUrl!,
+                                  item.albumImageUrl,
                                   width: 176,
                                   height: 176,
                                   fit: BoxFit.cover,
@@ -129,7 +134,7 @@ class AlbumListComponent extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        item.albumName!,
+                                        item.albumName,
                                         textAlign: TextAlign.start,
                                         maxLines: 1,
                                         style: TextStyle(
@@ -143,7 +148,7 @@ class AlbumListComponent extends StatelessWidget {
                                                 ? ''
                                                 : item.size.toString() +
                                                     '首 - ') +
-                                            item.artistNames![0],
+                                            item.artistNames[0],
                                         style: TextStyle(
                                           fontFamily: 'NotoSerifSC',
                                           color: Color(0xFF696969),

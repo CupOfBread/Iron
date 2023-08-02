@@ -87,8 +87,13 @@ class ArtistListComponent extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   children: state.artistList.map((item) {
                     return GestureDetector(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.Artist);
+                      onTap: () async {
+                        var result = await Get.toNamed(AppRoutes.Artist,
+                            arguments: {
+                              "id": item.id,
+                              "wyyId": item.wyyId,
+                              "ironId": item.ironId
+                            });
                       },
                       child: Container(
                         width: double.infinity,
@@ -124,7 +129,7 @@ class ArtistListComponent extends StatelessWidget {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(27),
                                         child: Image.network(
-                                          item.avatarUrl!,
+                                          item.avatarUrl,
                                           width: 54,
                                           height: 54,
                                           fit: BoxFit.cover,
@@ -145,7 +150,7 @@ class ArtistListComponent extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            item.name!,
+                                            item.name,
                                             maxLines: 1,
                                             style: TextStyle(
                                               fontFamily: 'NotoSerifSC',
@@ -155,7 +160,7 @@ class ArtistListComponent extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            '15 首歌',
+                                            item.albumSize.toString() + ' 首歌',
                                             maxLines: 1,
                                             style: TextStyle(
                                               fontFamily: 'NotoSerifSC',
@@ -178,8 +183,8 @@ class ArtistListComponent extends StatelessWidget {
                                 decoration: BoxDecoration(),
                                 alignment: AlignmentDirectional(0, 0),
                                 child: Padding(
-                                  padding:
-                                      EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 8, 0),
                                   child: Icon(
                                     Icons.favorite_border_rounded,
                                     color: Color(0xFF6B6B6B),
