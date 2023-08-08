@@ -6,6 +6,7 @@ import 'package:flash/flash.dart';
 import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iron/common/models/Song.dart';
 import 'package:iron/components/bottom_player_bar/logic.dart';
 
 import 'logic.dart';
@@ -44,11 +45,16 @@ class PlayerPage extends StatelessWidget {
                       decoration: BoxDecoration(),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                          'http://p2.music.126.net/siZY5oHkqJhzq10eMQqMYQ==/109951168432318621.jpg?param=400y400',
-                          width: double.infinity,
-                          height: double.infinity,
-                          fit: BoxFit.cover,
+                        child: ValueListenableBuilder<Song>(
+                          valueListenable: playerBarLogic.currentSongNotifier,
+                          builder: (_, value, __) {
+                            return Image.network(
+                              value.albumImageUrl,
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.cover,
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -90,31 +96,45 @@ class PlayerPage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10, 0, 10, 8),
-                                    child: Text(
-                                      '回忆旅行',
-                                      textAlign: TextAlign.start,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                        fontFamily: 'NotoSerifSC',
-                                        color: Color(0xFFFBFBFB),
-                                        fontSize: 29,
-                                        letterSpacing: 0,
-                                        fontWeight: FontWeight.w900,
-                                      ),
+                                    child: ValueListenableBuilder<Song>(
+                                      valueListenable:
+                                          playerBarLogic.currentSongNotifier,
+                                      builder: (_, value, __) {
+                                        return Text(
+                                          value.trackName,
+                                          textAlign: TextAlign.start,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                            fontFamily: 'NotoSerifSC',
+                                            color: Color(0xFFFBFBFB),
+                                            fontSize: 29,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         14, 0, 10, 0),
-                                    child: Text(
-                                      '星谷樹_itsuki',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        fontFamily: 'NotoSerifSC',
-                                        color: Color(0xFFF0F0F0),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                    child: ValueListenableBuilder<Song>(
+                                      valueListenable:
+                                          playerBarLogic.currentSongNotifier,
+                                      builder: (_, value, __) {
+                                        return Text(
+                                          value.artistNames[0],
+                                          textAlign: TextAlign.start,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                            fontFamily: 'NotoSerifSC',
+                                            color: Color(0xFFF0F0F0),
+                                            fontSize: 16,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ],
@@ -159,11 +179,19 @@ class PlayerPage extends StatelessWidget {
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(8),
-                                                  child: Image.network(
-                                                    'http://p2.music.126.net/siZY5oHkqJhzq10eMQqMYQ==/109951168432318621.jpg?param=400y400',
-                                                    width: 300,
-                                                    height: 300,
-                                                    fit: BoxFit.cover,
+                                                  child: ValueListenableBuilder<
+                                                      Song>(
+                                                    valueListenable:
+                                                        playerBarLogic
+                                                            .currentSongNotifier,
+                                                    builder: (_, value, __) {
+                                                      return Image.network(
+                                                        value.albumImageUrl,
+                                                        width: 300,
+                                                        height: 300,
+                                                        fit: BoxFit.cover,
+                                                      );
+                                                    },
                                                   ),
                                                 ),
                                               ),

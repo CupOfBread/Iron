@@ -29,6 +29,7 @@ class ProgressBarState {
 
 class BottomPlayerBarLogic extends GetxController {
   final BottomPlayerBarState state = BottomPlayerBarState();
+  final isar = GetIt.I<Isar>();
 
   //当前播放音乐
   final currentSongNotifier = ValueNotifier<Song>(Song());
@@ -71,12 +72,14 @@ class BottomPlayerBarLogic extends GetxController {
 
   void _setInitialPlaylist() async {
     const prefix = 'https://www.soundhelix.com/examples/mp3';
-    final song2 = Uri.parse('$prefix/SoundHelix-Song-2.mp3');
+    final song1 = Uri.parse('https://m801.music.126.net/20230808235502/06dbb69e2f5b0ef887f9fb5e7e5677ea/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/13385789410/e12f/a3da/d2cc/f62766d7d310c9de4ce6132038bd5d4a.m4a');
+    final song2 = Uri.parse('https://m701.music.126.net/20230808235139/52d612d3d3f7e2b98f679f12d9915de7/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/19844353865/0685/4b96/28f5/f06a794b96ae452defaf2761fa730aaa.m4a');
     final song3 = Uri.parse('$prefix/SoundHelix-Song-3.mp3');
 
     _playlist = ConcatenatingAudioSource(children: [
-      AudioSource.asset('assets/music/demo.m4a', tag: 'Song 1'),
-      AudioSource.uri(song2, tag: 'Song 2'),
+      // AudioSource.asset('assets/music/demo.m4a', tag: '1927134910'),
+      AudioSource.uri(song1, tag: '1927134910'),
+      AudioSource.uri(song2, tag: '441491828'),
       AudioSource.uri(song3, tag: 'Song 3'),
     ]);
     await _audioPlayer.setAudioSource(_playlist);
@@ -134,14 +137,26 @@ class BottomPlayerBarLogic extends GetxController {
   }
 
   void _listenForChangesInSequenceState() {
-    _audioPlayer.sequenceStateStream.listen((sequenceState) {
+    _audioPlayer.sequenceStateStream.listen((sequenceState) async {
       if (sequenceState == null) return;
 
       // update current song title
       final currentItem = sequenceState.currentSource;
 
-      // final title = currentItem?.tag as String?;
-      // currentSongNotifier.value.songTitle = title ?? '';
+      final String currentSongId = currentItem?.tag;
+
+      final currentSong = await isar.songs
+              .filter()
+              .wyyIdEqualTo(currentSongId)
+              .or()
+              .ironIdEqualTo(currentSongId)
+              .or()
+              .idEqualTo(int.parse(currentSongId))
+              .findFirst() ??
+          Song();
+
+      // update current song
+      currentSongNotifier.value = currentSong;
 
       // update playlist
       final playlist = sequenceState.effectiveSequence;

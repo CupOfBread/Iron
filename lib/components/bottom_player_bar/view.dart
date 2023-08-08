@@ -1,6 +1,7 @@
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iron/common/models/Song.dart';
 import 'package:iron/pages/player/view.dart';
 import 'package:marquee/marquee.dart';
 
@@ -13,6 +14,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final logic = Get.put(BottomPlayerBarLogic());
     final state = Get.find<BottomPlayerBarLogic>().state;
+    final playerBarLogic = Get.put(BottomPlayerBarLogic());
 
     return Container(
       width: double.infinity,
@@ -52,11 +54,16 @@ class BottomPlayerBarComponent extends StatelessWidget {
                           topLeft: Radius.circular(6),
                           topRight: Radius.circular(6),
                         ),
-                        child: Image.network(
-                          'http://p2.music.126.net/siZY5oHkqJhzq10eMQqMYQ==/109951168432318621.jpg?param=400y400',
-                          width: 44,
-                          height: 44,
-                          fit: BoxFit.cover,
+                        child: ValueListenableBuilder<Song>(
+                          valueListenable: playerBarLogic.currentSongNotifier,
+                          builder: (_, value, __) {
+                            return Image.network(
+                              value.albumImageUrl,
+                              width: 44,
+                              height: 44,
+                              fit: BoxFit.cover,
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -68,20 +75,28 @@ class BottomPlayerBarComponent extends StatelessWidget {
                         width: double.infinity,
                         height: double.infinity,
                         decoration: BoxDecoration(),
-                        child: Marquee(
-                          text: '回憶旅行' + ' - ' + '星谷樹_itsuki',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          blankSpace: 180,
-                          velocity: 160.0,
-                          pauseAfterRound: Duration(seconds: 1),
-                          showFadingOnlyWhenScrolling: true,
-                          fadingEdgeStartFraction: 0.1,
-                          fadingEdgeEndFraction: 0.1,
-                          startPadding: 10.0,
-                          accelerationDuration: Duration(seconds: 1),
-                          accelerationCurve: Curves.linear,
-                          decelerationDuration: Duration(milliseconds: 500),
-                          decelerationCurve: Curves.easeOut,
+                        child: ValueListenableBuilder<Song>(
+                          valueListenable: playerBarLogic.currentSongNotifier,
+                          builder: (_, value, __) {
+                            //TODO: 切换歌曲后，滚动错位
+                            return Marquee(
+                              text: value.trackName +
+                                  ' - ' +
+                                  value.artistNames[0],
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              blankSpace: 180,
+                              velocity: 160.0,
+                              pauseAfterRound: Duration(seconds: 1),
+                              showFadingOnlyWhenScrolling: true,
+                              fadingEdgeStartFraction: 0.1,
+                              fadingEdgeEndFraction: 0.1,
+                              startPadding: 10.0,
+                              accelerationDuration: Duration(seconds: 1),
+                              accelerationCurve: Curves.linear,
+                              decelerationDuration: Duration(milliseconds: 500),
+                              decelerationCurve: Curves.easeOut,
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -133,7 +148,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
                         }
                       }),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       logic.onNextSongButtonPressed();
                     },
                     child: Icon(
