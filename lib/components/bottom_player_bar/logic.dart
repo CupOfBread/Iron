@@ -72,14 +72,16 @@ class BottomPlayerBarLogic extends GetxController {
 
   void _setInitialPlaylist() async {
     const prefix = 'https://www.soundhelix.com/examples/mp3';
-    final song1 = Uri.parse('https://m801.music.126.net/20230808235502/06dbb69e2f5b0ef887f9fb5e7e5677ea/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/13385789410/e12f/a3da/d2cc/f62766d7d310c9de4ce6132038bd5d4a.m4a');
-    final song2 = Uri.parse('https://m701.music.126.net/20230808235139/52d612d3d3f7e2b98f679f12d9915de7/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/19844353865/0685/4b96/28f5/f06a794b96ae452defaf2761fa730aaa.m4a');
+    final song1 = Uri.parse(
+        'https://m804.music.126.net/20230809234437/b788ab90fe3ea58af13e0b8ef003890b/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/13385789410/e12f/a3da/d2cc/f62766d7d310c9de4ce6132038bd5d4a.m4a?authSecret=00000189dae1c90617e10aa468411899');
+    final song2 = Uri.parse(
+        'https://m804.music.126.net/20230809230951/8bca130294c2260f914dc6bfc72457f3/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/22259911164/18da/9d0e/fc66/dece383a639f3912920d3994e639b2fb.m4a?authSecret=00000189dac1f4c105670aa4682b12cc');
     final song3 = Uri.parse('$prefix/SoundHelix-Song-3.mp3');
 
     _playlist = ConcatenatingAudioSource(children: [
       // AudioSource.asset('assets/music/demo.m4a', tag: '1927134910'),
       AudioSource.uri(song1, tag: '1927134910'),
-      AudioSource.uri(song2, tag: '441491828'),
+      AudioSource.uri(song2, tag: '25882976'),
       AudioSource.uri(song3, tag: 'Song 3'),
     ]);
     await _audioPlayer.setAudioSource(_playlist);
@@ -224,5 +226,32 @@ class BottomPlayerBarLogic extends GetxController {
     await isar.writeTxn(() async {
       await isar.albums.putAll(AlbumDataExample().loadAlbums());
     });
+  }
+
+  void loadNewPlaylist(List<String> songIdList) async {
+    List<Song> songList = await isar.songs
+        .filter()
+        .anyOf(
+            songIdList,
+            (q, element) => q
+                .wyyIdEqualTo(element)
+                .or()
+                .ironIdEqualTo(element)
+                .idEqualTo(int.parse(element)))
+        .findAll();
+
+    List<AudioSource> audioSourceList = [];
+
+    songList.forEach((element) {
+      if (element.songSourceType == SongSourceType.network) {
+        audioSourceList
+            .add(AudioSource.uri(Uri.parse(element.path), tag: element.wyyId));
+      } else {
+        audioSourceList.add(AudioSource.file(element.path, tag: element.wyyId));
+      }
+    });
+
+    _playlist = ConcatenatingAudioSource(children: audioSourceList);
+    _audioPlayer.setAudioSource(_playlist);
   }
 }

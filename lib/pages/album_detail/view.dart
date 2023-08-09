@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,8 +40,8 @@ class AlbumDetailPage extends StatelessWidget {
                     blendMode: BlendMode.dstIn,
                     child: GetBuilder<AlbumDetailLogic>(
                       builder: (logic) {
-                        return Image.network(
-                          state.album.albumImageUrl,
+                        return CachedNetworkImage(
+                          imageUrl: state.album.albumImageUrl,
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: double.infinity,
@@ -124,8 +125,8 @@ class AlbumDetailPage extends StatelessWidget {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
-                                  child: Image.network(
-                                    state.album.albumImageUrl,
+                                  child: CachedNetworkImage(
+                                    imageUrl: state.album.albumImageUrl,
                                     width: double.infinity,
                                     height: double.infinity,
                                     fit: BoxFit.cover,

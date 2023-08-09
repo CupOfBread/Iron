@@ -26,7 +26,7 @@ class Song {
   String trackAlias = '';
 
   //专辑图片
-  String albumImageUrl = '';
+  String albumImageUrl = 'https://pic.imgdb.cn/item/64ca03a11ddac507cc039568.png';
 
   //专辑ID
   String albumId = '';

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,8 +37,8 @@ class ArtistDetailPage extends StatelessWidget {
                 blendMode: BlendMode.dstIn,
                 child: GetBuilder<ArtistDetailLogic>(
                   builder: (logic) {
-                    return Image.network(
-                      state.artist.avatarUrl,
+                    return CachedNetworkImage(
+                      imageUrl: state.artist.avatarUrl,
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,

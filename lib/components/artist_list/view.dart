@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iron/router/app_pages.dart';
@@ -128,8 +129,8 @@ class ArtistListComponent extends StatelessWidget {
                                       ),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(27),
-                                        child: Image.network(
-                                          item.avatarUrl,
+                                        child: CachedNetworkImage(
+                                          imageUrl: item.avatarUrl,
                                           width: 54,
                                           height: 54,
                                           fit: BoxFit.cover,

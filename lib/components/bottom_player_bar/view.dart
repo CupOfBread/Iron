@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,11 +58,15 @@ class BottomPlayerBarComponent extends StatelessWidget {
                         child: ValueListenableBuilder<Song>(
                           valueListenable: playerBarLogic.currentSongNotifier,
                           builder: (_, value, __) {
-                            return Image.network(
-                              value.albumImageUrl,
+                            return CachedNetworkImage(
+                              imageUrl: value.albumImageUrl,
                               width: 44,
                               height: 44,
                               fit: BoxFit.cover,
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(
+                                color: Colors.black12,
+                              ),
                             );
                           },
                         ),
@@ -74,27 +79,33 @@ class BottomPlayerBarComponent extends StatelessWidget {
                       child: Container(
                         width: double.infinity,
                         height: double.infinity,
-                        decoration: BoxDecoration(),
+                        alignment: AlignmentDirectional(-1, 0),
                         child: ValueListenableBuilder<Song>(
                           valueListenable: playerBarLogic.currentSongNotifier,
                           builder: (_, value, __) {
                             //TODO: 切换歌曲后，滚动错位
-                            return Marquee(
-                              text: value.trackName +
-                                  ' - ' +
-                                  value.artistNames[0],
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              blankSpace: 180,
-                              velocity: 160.0,
-                              pauseAfterRound: Duration(seconds: 1),
-                              showFadingOnlyWhenScrolling: true,
-                              fadingEdgeStartFraction: 0.1,
-                              fadingEdgeEndFraction: 0.1,
-                              startPadding: 10.0,
-                              accelerationDuration: Duration(seconds: 1),
-                              accelerationCurve: Curves.linear,
-                              decelerationDuration: Duration(milliseconds: 500),
-                              decelerationCurve: Curves.easeOut,
+                            // return Marquee(
+                            //   text: value.trackName +
+                            //       ' - ' +
+                            //       value.artistNames[0],
+                            //   style: TextStyle(fontWeight: FontWeight.bold),
+                            //   blankSpace: 180,
+                            //   velocity: 160.0,
+                            //   pauseAfterRound: Duration(seconds: 1),
+                            //   showFadingOnlyWhenScrolling: true,
+                            //   fadingEdgeStartFraction: 0.1,
+                            //   fadingEdgeEndFraction: 0.1,
+                            //   startPadding: 10.0,
+                            //   accelerationDuration: Duration(seconds: 1),
+                            //   accelerationCurve: Curves.linear,
+                            //   decelerationDuration: Duration(milliseconds: 500),
+                            //   decelerationCurve: Curves.easeOut,
+                            // );
+                            // );
+                            return Text(
+                              '${value.trackName} - ${value.artistNames[0]}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             );
                           },
                         ),
