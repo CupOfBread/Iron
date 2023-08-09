@@ -54,6 +54,7 @@ dependencies:
   # 获取媒体信息
   flutter_media_metadata: ^1.0.0+1
   flash: ^3.0.5+1
+  dio: ^5.3.2
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
   assets:
     - assets/
     - assets/music/
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

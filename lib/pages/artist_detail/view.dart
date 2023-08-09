@@ -180,91 +180,96 @@ class ArtistDetailPage extends StatelessWidget {
                       return ListView.builder(
                           itemCount: state.songList.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              width: double.infinity,
-                              height: 70,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 0.88,
-                                    height: double.infinity,
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 48,
-                                          height: 50,
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Text(
-                                            (index + 1).toString(),
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w800,
-                                              color: Color(0xFF2B2B2B),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            width: double.infinity,
-                                            height: 50,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  state.songList[index]
-                                                      .trackName,
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontFamily: 'NotoSerifSC',
-                                                    color: Color(0xFF474747),
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w800,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  state.songList[index]
-                                                      .artistNames[0],
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontFamily: 'NotoSerifSC',
-                                                    color: Color(0xFF767676),
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: double.infinity,
+                            return GestureDetector(
+                              onTap: (){
+                                logic.changePlayList(index);
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                height: 70,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      width:
+                                          MediaQuery.sizeOf(context).width * 0.88,
                                       height: double.infinity,
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 4, 0),
-                                        child: Icon(
-                                          Icons.more_vert,
-                                          color: Color(0xFF6B6B6B),
-                                          size: 22,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 48,
+                                            height: 50,
+                                            alignment: AlignmentDirectional(0, 0),
+                                            child: Text(
+                                              (index + 1).toString(),
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w800,
+                                                color: Color(0xFF2B2B2B),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 50,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceAround,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    state.songList[index]
+                                                        .trackName,
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                      fontFamily: 'NotoSerifSC',
+                                                      color: Color(0xFF474747),
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.w800,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    state.songList[index]
+                                                        .artistNames[0],
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                      fontFamily: 'NotoSerifSC',
+                                                      color: Color(0xFF767676),
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w300,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 4, 0),
+                                          child: Icon(
+                                            Icons.more_vert,
+                                            color: Color(0xFF6B6B6B),
+                                            size: 22,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           });

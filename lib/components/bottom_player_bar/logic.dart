@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -70,19 +71,23 @@ class BottomPlayerBarLogic extends GetxController {
     _listenForChangesInSequenceState();
   }
 
+  Future<String> getSongPlayUrl(String songId) async {
+    final dio = Dio();
+    String originUrl =
+        'https://music.163.com/song/media/outer/url?id=' + songId + '.mp3';
+    final response = await dio.get(originUrl);
+    return response.redirects.first.location
+        .toString()
+        .replaceAll("http", "https");
+  }
+
   void _setInitialPlaylist() async {
-    const prefix = 'https://www.soundhelix.com/examples/mp3';
-    final song1 = Uri.parse(
-        'https://m804.music.126.net/20230809234437/b788ab90fe3ea58af13e0b8ef003890b/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/13385789410/e12f/a3da/d2cc/f62766d7d310c9de4ce6132038bd5d4a.m4a?authSecret=00000189dae1c90617e10aa468411899');
-    final song2 = Uri.parse(
-        'https://m804.music.126.net/20230809230951/8bca130294c2260f914dc6bfc72457f3/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/22259911164/18da/9d0e/fc66/dece383a639f3912920d3994e639b2fb.m4a?authSecret=00000189dac1f4c105670aa4682b12cc');
-    final song3 = Uri.parse('$prefix/SoundHelix-Song-3.mp3');
+    final song1 = Uri.parse(await getSongPlayUrl('1927134910'));
+    final song2 = Uri.parse(await getSongPlayUrl('25882976'));
 
     _playlist = ConcatenatingAudioSource(children: [
-      // AudioSource.asset('assets/music/demo.m4a', tag: '1927134910'),
       AudioSource.uri(song1, tag: '1927134910'),
       AudioSource.uri(song2, tag: '25882976'),
-      AudioSource.uri(song3, tag: 'Song 3'),
     ]);
     await _audioPlayer.setAudioSource(_playlist);
   }
@@ -240,18 +245,29 @@ class BottomPlayerBarLogic extends GetxController {
                 .idEqualTo(int.parse(element)))
         .findAll();
 
-    List<AudioSource> audioSourceList = [];
+    if (songIdList.isNotEmpty) {
+      //先处理第一首歌曲
+      if (songList[0].songSourceType == SongSourceType.network) {
+        AudioSource audioSource = AudioSource.uri(
+            Uri.parse(await getSongPlayUrl(songList[0].wyyId)),
+            tag: songList[0].wyyId);
 
-    songList.forEach((element) {
-      if (element.songSourceType == SongSourceType.network) {
-        audioSourceList
-            .add(AudioSource.uri(Uri.parse(element.path), tag: element.wyyId));
-      } else {
-        audioSourceList.add(AudioSource.file(element.path, tag: element.wyyId));
+        _playlist = ConcatenatingAudioSource(children: [audioSource]);
+        _audioPlayer.setAudioSource(_playlist);
       }
-    });
 
-    _playlist = ConcatenatingAudioSource(children: audioSourceList);
-    _audioPlayer.setAudioSource(_playlist);
+      if (songIdList.length > 1) {
+        for (var i = 1; i < songList.length; i++) {
+          if (songList[i].songSourceType == SongSourceType.network) {
+            _playlist.add(AudioSource.uri(
+                Uri.parse(await getSongPlayUrl(songList[i].wyyId)),
+                tag: songList[i].wyyId));
+          } else {
+            _playlist.add(
+                AudioSource.file(songList[i].path, tag: songList[i].wyyId));
+          }
+        }
+      }
+    }
   }
 }
