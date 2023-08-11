@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iron/common/models/Song.dart';
 import 'package:iron/components/bottom_player_bar/logic.dart';
+import 'package:iron/components/lyric/view.dart';
 
 import 'logic.dart';
 
@@ -263,7 +264,7 @@ class PlayerPage extends StatelessWidget {
                                           ],
                                         ),
                                         Container(
-                                          child: Text("===lyrics==="),
+                                          child: LyricComponent(),
                                         ),
                                       ],
                                     ),
