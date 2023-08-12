@@ -5,14 +5,17 @@ import 'package:iron/router/app_pages.dart';
 
 import 'logic.dart';
 
-class AlbumListComponent extends StatelessWidget {
-  const AlbumListComponent({Key? key}) : super(key: key);
+class AlbumListComponent extends StatefulWidget {
+  @override
+  _AlbumListComponent createState() => _AlbumListComponent();
+}
+
+class _AlbumListComponent extends State<AlbumListComponent> with AutomaticKeepAliveClientMixin {
+  final logic = Get.put(AlbumListLogic());
+  final state = Get.find<AlbumListLogic>().state;
 
   @override
   Widget build(BuildContext context) {
-    final logic = Get.put(AlbumListLogic());
-    final state = Get.find<AlbumListLogic>().state;
-
     logic.getAlbumList();
 
     return Column(
@@ -98,14 +101,10 @@ class AlbumListComponent extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     children: state.albumList.map((item) {
-                      return GestureDetector(
+                      return InkWell(
                         onTap: () async {
                           var result = await Get.toNamed(AppRoutes.Album,
-                              arguments: {
-                                "id": item.id,
-                                "wyyId": item.wyyId,
-                                "ironId": item.ironId
-                              });
+                              arguments: {"id": item.id, "wyyId": item.wyyId, "ironId": item.ironId});
                         },
                         child: Container(
                           decoration: BoxDecoration(),
@@ -124,15 +123,13 @@ class AlbumListComponent extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Container(
                                   width: 170,
                                   decoration: BoxDecoration(),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         item.albumName,
@@ -145,10 +142,7 @@ class AlbumListComponent extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        (item.size.toString() == 'null'
-                                                ? ''
-                                                : item.size.toString() +
-                                                    '首 - ') +
+                                        (item.size.toString() == 'null' ? '' : item.size.toString() + '首 - ') +
                                             item.artistNames[0],
                                         style: TextStyle(
                                           fontFamily: 'NotoSerifSC',
@@ -174,4 +168,8 @@ class AlbumListComponent extends StatelessWidget {
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

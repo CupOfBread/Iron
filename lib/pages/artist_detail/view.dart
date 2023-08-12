@@ -27,12 +27,8 @@ class ArtistDetailPage extends StatelessWidget {
               height: 300,
               child: ShaderMask(
                 shaderCallback: (rect) {
-                  return LinearGradient(
-                          begin: Alignment.center,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.black, Colors.transparent])
-                      .createShader(
-                          Rect.fromLTRB(0, 0, rect.width, rect.height));
+                  return LinearGradient(begin: Alignment.center, end: Alignment.bottomCenter, colors: [Colors.black, Colors.transparent])
+                      .createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
                 },
                 blendMode: BlendMode.dstIn,
                 child: GetBuilder<ArtistDetailLogic>(
@@ -66,9 +62,7 @@ class ArtistDetailPage extends StatelessWidget {
                             icon: Icon(
                               Icons.chevron_left_rounded,
                               color: Colors.white,
-                              shadows: [
-                                Shadow(color: Colors.black54, blurRadius: 15.0)
-                              ],
+                              shadows: [Shadow(color: Colors.black54, blurRadius: 15.0)],
                             ),
                             onPressed: () {
                               Get.back();
@@ -123,14 +117,10 @@ class ArtistDetailPage extends StatelessWidget {
                                 Align(
                                   alignment: AlignmentDirectional(0, 0),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        4, 0, 0, 0),
-                                    child: GetBuilder<ArtistDetailLogic>(
-                                        builder: (logic) {
+                                    padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                                    child: GetBuilder<ArtistDetailLogic>(builder: (logic) {
                                       return Text(
-                                        '随机播放(' +
-                                            state.songList.length.toString() +
-                                            ')',
+                                        '随机播放(' + state.songList.length.toString() + ')',
                                         style: TextStyle(
                                           fontFamily: 'NotoSerifSC',
                                           color: Color(0xFF696B5A),
@@ -152,8 +142,7 @@ class ArtistDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                 child: Icon(
                                   Icons.sort_by_alpha_rounded,
                                   color: Color(0xFF727272),
@@ -161,8 +150,7 @@ class ArtistDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 14, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 14, 0),
                                 child: Icon(
                                   Icons.checklist_sharp,
                                   color: Color(0xFF727272),
@@ -180,8 +168,8 @@ class ArtistDetailPage extends StatelessWidget {
                       return ListView.builder(
                           itemCount: state.songList.length,
                           itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: (){
+                            return InkWell(
+                              onTap: () {
                                 logic.changePlayList(index);
                               },
                               child: Container(
@@ -191,13 +179,11 @@ class ArtistDetailPage extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Container(
-                                      width:
-                                          MediaQuery.sizeOf(context).width * 0.88,
+                                      width: MediaQuery.sizeOf(context).width * 0.88,
                                       height: double.infinity,
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Container(
                                             width: 48,
@@ -218,14 +204,11 @@ class ArtistDetailPage extends StatelessWidget {
                                               height: 50,
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.spaceAround,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    state.songList[index]
-                                                        .trackName,
+                                                    state.songList[index].trackName,
                                                     maxLines: 1,
                                                     style: TextStyle(
                                                       fontFamily: 'NotoSerifSC',
@@ -235,8 +218,7 @@ class ArtistDetailPage extends StatelessWidget {
                                                     ),
                                                   ),
                                                   Text(
-                                                    state.songList[index]
-                                                        .artistNames[0],
+                                                    state.songList[index].artistNames[0],
                                                     maxLines: 1,
                                                     style: TextStyle(
                                                       fontFamily: 'NotoSerifSC',
@@ -258,8 +240,7 @@ class ArtistDetailPage extends StatelessWidget {
                                         height: double.infinity,
                                         alignment: AlignmentDirectional(0, 0),
                                         child: Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 4, 0),
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
                                           child: Icon(
                                             Icons.more_vert,
                                             color: Color(0xFF6B6B6B),

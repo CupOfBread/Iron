@@ -1,18 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iron/common/models/Song.dart';
 
 import 'logic.dart';
 
-class SongListComponent extends StatelessWidget {
-  const SongListComponent({Key? key}) : super(key: key);
+class SongListComponent extends StatefulWidget {
+  @override
+  _SongListComponent createState() => _SongListComponent();
+}
+
+class _SongListComponent extends State<SongListComponent> with AutomaticKeepAliveClientMixin {
+  final logic = Get.put(SongListLogic());
+  final state = Get.find<SongListLogic>().state;
 
   @override
   Widget build(BuildContext context) {
-    final logic = Get.put(SongListLogic());
-    final state = Get.find<SongListLogic>().state;
-
     logic.getSongList();
 
     return Column(
@@ -92,130 +94,127 @@ class SongListComponent extends StatelessWidget {
         ),
         Expanded(
           child: GetBuilder<SongListLogic>(builder: (logic) {
-            return ListView(
-              padding: EdgeInsets.fromLTRB(
-                0,
-                0,
-                0,
-                80,
-              ),
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              children: state.songList.asMap().entries.map((entry) {
-                int index = entry.key;
-                Song item = entry.value;
-
-                return GestureDetector(
-                  onTap: () {
-                    logic.changePlayList(index);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 76,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          width: MediaQuery.sizeOf(context).width * 0.88,
-                          height: double.infinity,
-                          decoration: BoxDecoration(),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(12, 0, 8, 0),
-                                child: Container(
-                                  width: 54,
-                                  height: 54,
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 4,
-                                        color: Color(0x5554633F),
-                                        offset: Offset(1, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: CachedNetworkImage(
-                                      imageUrl: item.albumImageUrl,
-                                      width: 54,
-                                      height: 54,
-                                      fit: BoxFit.cover,
+            return ListView.builder(
+                padding: EdgeInsets.fromLTRB(
+                  0,
+                  0,
+                  0,
+                  80,
+                ),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: state.songList.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      logic.changePlayList(index);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 76,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            width: MediaQuery.sizeOf(context).width * 0.88,
+                            height: double.infinity,
+                            decoration: BoxDecoration(),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(12, 0, 8, 0),
+                                  child: Container(
+                                    width: 54,
+                                    height: 54,
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 4,
+                                          color: Color(0x5554633F),
+                                          offset: Offset(1, 2),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: CachedNetworkImage(
+                                        imageUrl: state.songList[index].albumImageUrl,
+                                        width: 54,
+                                        height: 54,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 50,
-                                  decoration: BoxDecoration(),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        item.trackName,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontFamily: 'NotoSerifSC',
-                                          color: Color(0xFF474747),
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w800,
+                                Expanded(
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 50,
+                                    decoration: BoxDecoration(),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          state.songList[index].trackName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontFamily: 'NotoSerifSC',
+                                            color: Color(0xFF474747),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        item.artistNames[0],
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontFamily: 'NotoSerifSC',
-                                          color: Color(0xFF767676),
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w300,
+                                        Text(
+                                          state.songList[index].artistNames[0],
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontFamily: 'NotoSerifSC',
+                                            color: Color(0xFF767676),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            decoration: BoxDecoration(),
-                            alignment: AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: Icon(
-                                Icons.more_vert,
-                                color: Color(0xFF6B6B6B),
-                                size: 22,
+                          Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(),
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                                child: Icon(
+                                  Icons.more_vert,
+                                  color: Color(0xFF6B6B6B),
+                                  size: 22,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }).toList(),
-            );
+                  );
+                });
           }),
         )
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

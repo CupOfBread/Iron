@@ -33,7 +33,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          GestureDetector(
+          InkWell(
             onTap: () {
               context.pushTransparentRoute(PlayerPage());
             },
@@ -63,8 +63,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
                               width: 44,
                               height: 44,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(
+                              placeholder: (context, url) => CircularProgressIndicator(
                                 color: Colors.black12,
                               ),
                             );
@@ -158,7 +157,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
                             );
                         }
                       }),
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       logic.onNextSongButtonPressed();
                     },

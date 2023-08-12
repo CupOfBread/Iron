@@ -12,13 +12,12 @@ class LyricComponent extends StatefulWidget {
   _LyricComponent createState() => _LyricComponent();
 }
 
-class _LyricComponent extends State<LyricComponent> {
+class _LyricComponent extends State<LyricComponent> with AutomaticKeepAliveClientMixin {
   final logic = Get.put(LyricLogic());
   final bottomPlayerBarLogic = Get.put(BottomPlayerBarLogic());
   final state = Get.find<LyricLogic>().state;
 
-  var lyricModel =
-      LyricsModelBuilder.create().bindLyricToMain(normalLyric).getModel();
+  var lyricModel = LyricsModelBuilder.create().bindLyricToMain(normalLyric).getModel();
 
   var playing = false;
   var lyricUI = UINetease();
@@ -36,6 +35,7 @@ class _LyricComponent extends State<LyricComponent> {
     return ValueListenableBuilder<ProgressBarState>(
       valueListenable: bottomPlayerBarLogic.progressNotifier,
       builder: (_, value, __) {
+        print(value.current.inMilliseconds);
         return LyricsReader(
           padding: EdgeInsets.symmetric(horizontal: 20),
           lyricUi: lyricUI,
@@ -52,4 +52,7 @@ class _LyricComponent extends State<LyricComponent> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

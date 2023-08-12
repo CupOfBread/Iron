@@ -55,6 +55,7 @@ dependencies:
   flutter_media_metadata: ^1.0.0+1
   flash: ^3.0.5+1
   dio: ^5.3.2
+  file_picker: ^5.3.3
 
 dev_dependencies:
   flutter_test:

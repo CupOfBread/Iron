@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iron/components/album_list/view.dart';
 import 'package:iron/components/artist_list/view.dart';
 import 'package:iron/components/song_list/view.dart';
+import 'package:iron/pages/home/logic.dart';
 
 import 'logic.dart';
 
@@ -13,6 +14,7 @@ class CabinetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final logic = Get.put(CabinetLogic());
     final state = Get.find<CabinetLogic>().state;
+    final homeState = Get.find<HomeLogic>().state;
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -39,8 +41,7 @@ class CabinetPage extends StatelessWidget {
                         alignment: AlignmentDirectional(-1, 0),
                         child: TabBar(
                           isScrollable: true,
-                          labelPadding:
-                              EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                          labelPadding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
                           indicatorColor: Colors.transparent,
                           labelColor: Colors.black87,
                           labelStyle: TextStyle(
@@ -70,10 +71,17 @@ class CabinetPage extends StatelessWidget {
                       )),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(18, 0, 18, 0),
-                        child: Icon(
-                          Icons.sort_rounded,
-                          size: 24,
-                        ),
+                        child: Builder(builder: (context) {
+                          return IconButton(
+                            onPressed: () {
+                              Scaffold.of(context).openEndDrawer();
+                            },
+                            icon: Icon(
+                              Icons.sort_rounded,
+                              size: 24,
+                            ),
+                          );
+                        }),
                       ),
                     ],
                   ),

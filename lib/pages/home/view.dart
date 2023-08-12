@@ -20,13 +20,16 @@ class HomePage extends StatelessWidget {
     final navState = Get.find<BottomBarLogic>().state;
     final bottomBarLogic = Get.find<BottomBarLogic>();
 
-    List<Widget> pages = const [
-      const DiscoverPage(),
-      const CabinetPage(),
-      const MyPage()
-    ];
+    List<Widget> pages = const [const DiscoverPage(), const CabinetPage(), const MyPage()];
 
     return Scaffold(
+      endDrawer: Drawer(
+        child: SafeArea(
+          child: ListView(
+            children: [DrawerHeader(child: Text('Header'))],
+          ),
+        ),
+      ),
       body: SafeArea(
           top: true,
           child: Stack(children: [
@@ -39,10 +42,7 @@ class HomePage extends StatelessWidget {
                 children: pages,
               ),
             ),
-            Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [BottomPlayerBarComponent()])
+            Column(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.end, children: [BottomPlayerBarComponent()])
           ])),
       bottomNavigationBar: BottomBarComponent(),
     );

@@ -85,8 +85,7 @@ class PlayerPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 30, 0, 30),
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 30),
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(),
@@ -95,11 +94,9 @@ class PlayerPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 10, 8),
+                                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 8),
                                     child: ValueListenableBuilder<Song>(
-                                      valueListenable:
-                                          playerBarLogic.currentSongNotifier,
+                                      valueListenable: playerBarLogic.currentSongNotifier,
                                       builder: (_, value, __) {
                                         return Text(
                                           value.trackName,
@@ -117,11 +114,9 @@ class PlayerPage extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        14, 0, 10, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(14, 0, 10, 0),
                                     child: ValueListenableBuilder<Song>(
-                                      valueListenable:
-                                          playerBarLogic.currentSongNotifier,
+                                      valueListenable: playerBarLogic.currentSongNotifier,
                                       builder: (_, value, __) {
                                         return Text(
                                           value.artistNames[0],
@@ -156,8 +151,7 @@ class PlayerPage extends StatelessWidget {
                                         ),
                                         Column(
                                           mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               width: 270,
@@ -171,20 +165,15 @@ class PlayerPage extends StatelessWidget {
                                                     spreadRadius: 1,
                                                   )
                                                 ],
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
+                                                borderRadius: BorderRadius.circular(6),
                                                 shape: BoxShape.rectangle,
                                               ),
                                               child: Opacity(
                                                 opacity: 0.9,
                                                 child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: ValueListenableBuilder<
-                                                      Song>(
-                                                    valueListenable:
-                                                        playerBarLogic
-                                                            .currentSongNotifier,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                  child: ValueListenableBuilder<Song>(
+                                                    valueListenable: playerBarLogic.currentSongNotifier,
                                                     builder: (_, value, __) {
                                                       return Image.network(
                                                         value.albumImageUrl,
@@ -198,15 +187,11 @@ class PlayerPage extends StatelessWidget {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 20, 20),
+                                              padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 20),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
                                                   IconButton(
                                                     icon: Icon(
@@ -214,7 +199,9 @@ class PlayerPage extends StatelessWidget {
                                                       color: Color(0xFFF2F2F2),
                                                       size: 32,
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () async {
+                                                      playerBarLogic.testLoadLocalSongs();
+                                                    },
                                                   ),
                                                   IconButton(
                                                     onPressed: () {},
@@ -234,28 +221,16 @@ class PlayerPage extends StatelessWidget {
                                                   ),
                                                   IconButton(
                                                     icon: Icon(
-                                                      Icons
-                                                          .favorite_border_rounded,
+                                                      Icons.favorite_border_rounded,
                                                       color: Color(0xFFF2F2F2),
                                                       size: 32,
                                                     ),
                                                     onPressed: () {
-                                                      playerBarLogic
-                                                          .loadExampleData();
+                                                      playerBarLogic.loadExampleData();
                                                       context.showFlash(
-                                                          duration:
-                                                              const Duration(
-                                                                  seconds: 2),
-                                                          builder: (context,
-                                                                  controller) =>
-                                                              FlashBar(
-                                                                  position:
-                                                                      FlashPosition
-                                                                          .top,
-                                                                  controller:
-                                                                      controller,
-                                                                  content: Text(
-                                                                      '加载示例数据完成')));
+                                                          duration: const Duration(seconds: 2),
+                                                          builder: (context, controller) => FlashBar(
+                                                              position: FlashPosition.top, controller: controller, content: Text('加载示例数据完成')));
                                                     },
                                                   ),
                                                 ],
@@ -263,9 +238,7 @@ class PlayerPage extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        Container(
-                                          child: LyricComponent(),
-                                        ),
+                                        LyricComponent(),
                                       ],
                                     ),
                                   ),
@@ -293,11 +266,9 @@ class PlayerPage extends StatelessWidget {
                                   baseBarColor: Colors.white38,
                                   progressBarColor: Colors.white,
                                   bufferedBarColor: Colors.white38,
-                                  thumbColor:
-                                      Color.fromRGBO(255, 255, 255, 0.99),
+                                  thumbColor: Color.fromRGBO(255, 255, 255, 0.99),
                                   thumbGlowColor: Colors.white24,
-                                  timeLabelTextStyle:
-                                      TextStyle(color: Colors.white70),
+                                  timeLabelTextStyle: TextStyle(color: Colors.white70),
                                   onSeek: playerBarLogic.seek,
                                 );
                               },
@@ -311,8 +282,7 @@ class PlayerPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                                 child: ValueListenableBuilder(
                                   builder: (_, isFirst, __) {
                                     return IconButton(
@@ -321,22 +291,16 @@ class PlayerPage extends StatelessWidget {
                                         color: Color(0xFFF2F2F2),
                                         size: 40,
                                       ),
-                                      onPressed: (isFirst)
-                                          ? null
-                                          : playerBarLogic
-                                              .onPreviousSongButtonPressed,
+                                      onPressed: (isFirst) ? null : playerBarLogic.onPreviousSongButtonPressed,
                                     );
                                   },
-                                  valueListenable:
-                                      playerBarLogic.isFirstSongNotifier,
+                                  valueListenable: playerBarLogic.isFirstSongNotifier,
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                 child: ValueListenableBuilder<PlayerState>(
-                                    valueListenable:
-                                        playerBarLogic.playerPlayButtonNotifier,
+                                    valueListenable: playerBarLogic.playerPlayButtonNotifier,
                                     builder: (_, value, __) {
                                       switch (value) {
                                         case PlayerState.loading:
@@ -344,14 +308,11 @@ class PlayerPage extends StatelessWidget {
                                             margin: const EdgeInsets.all(8.0),
                                             width: 60.0,
                                             height: 60.0,
-                                            child:
-                                                const CircularProgressIndicator(
-                                                    color: Colors.white),
+                                            child: const CircularProgressIndicator(color: Colors.white),
                                           );
                                         case PlayerState.paused:
                                           return IconButton(
-                                            icon: const Icon(Icons
-                                                .play_circle_outline_rounded),
+                                            icon: const Icon(Icons.play_circle_outline_rounded),
                                             iconSize: 60.0,
                                             color: Color(0xFFFBFBFB),
                                             onPressed: () {
@@ -360,8 +321,7 @@ class PlayerPage extends StatelessWidget {
                                           );
                                         case PlayerState.playing:
                                           return IconButton(
-                                            icon: const Icon(Icons
-                                                .pause_circle_outline_rounded),
+                                            icon: const Icon(Icons.pause_circle_outline_rounded),
                                             color: Color(0xFFFBFBFB),
                                             iconSize: 60.0,
                                             onPressed: () {
@@ -372,8 +332,7 @@ class PlayerPage extends StatelessWidget {
                                     }),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
                                 child: ValueListenableBuilder(
                                   builder: (_, isLast, __) {
                                     return IconButton(
@@ -382,14 +341,10 @@ class PlayerPage extends StatelessWidget {
                                         color: Color(0xFFF2F2F2),
                                         size: 40,
                                       ),
-                                      onPressed: (isLast)
-                                          ? null
-                                          : playerBarLogic
-                                              .onNextSongButtonPressed,
+                                      onPressed: (isLast) ? null : playerBarLogic.onNextSongButtonPressed,
                                     );
                                   },
-                                  valueListenable:
-                                      playerBarLogic.isLastSongNotifier,
+                                  valueListenable: playerBarLogic.isLastSongNotifier,
                                 ),
                               ),
                             ],
@@ -406,8 +361,7 @@ class PlayerPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      20, 0, 10, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(20, 0, 10, 0),
                                   child: Icon(
                                     Icons.keyboard_arrow_down_rounded,
                                     color: Color(0xFFF0F0F0),
@@ -415,8 +369,7 @@ class PlayerPage extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      15, 0, 25, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 25, 0),
                                   child: Icon(
                                     Icons.share_rounded,
                                     color: Color(0xFFF0F0F0),

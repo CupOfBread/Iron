@@ -5,14 +5,17 @@ import 'package:iron/router/app_pages.dart';
 
 import 'logic.dart';
 
-class ArtistListComponent extends StatelessWidget {
-  const ArtistListComponent({Key? key}) : super(key: key);
+class ArtistListComponent extends StatefulWidget {
+  @override
+  _ArtistListComponent createState() => _ArtistListComponent();
+}
+
+class _ArtistListComponent extends State<ArtistListComponent> {
+  final logic = Get.put(ArtistListLogic());
+  final state = Get.find<ArtistListLogic>().state;
 
   @override
   Widget build(BuildContext context) {
-    final logic = Get.put(ArtistListLogic());
-    final state = Get.find<ArtistListLogic>().state;
-
     logic.getAlbumList();
 
     return Column(
@@ -87,14 +90,10 @@ class ArtistListComponent extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                   children: state.artistList.map((item) {
-                    return GestureDetector(
+                    return InkWell(
                       onTap: () async {
                         var result = await Get.toNamed(AppRoutes.Artist,
-                            arguments: {
-                              "id": item.id,
-                              "wyyId": item.wyyId,
-                              "ironId": item.ironId
-                            });
+                            arguments: {"id": item.id, "wyyId": item.wyyId, "ironId": item.ironId});
                       },
                       child: Container(
                         width: double.infinity,
@@ -112,8 +111,7 @@ class ArtistListComponent extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        12, 0, 16, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(12, 0, 16, 0),
                                     child: Container(
                                       width: 54,
                                       height: 54,
@@ -145,10 +143,8 @@ class ArtistListComponent extends StatelessWidget {
                                       decoration: BoxDecoration(),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             item.name,
@@ -184,8 +180,7 @@ class ArtistListComponent extends StatelessWidget {
                                 decoration: BoxDecoration(),
                                 alignment: AlignmentDirectional(0, 0),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 8, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                                   child: Icon(
                                     Icons.favorite_border_rounded,
                                     color: Color(0xFF6B6B6B),

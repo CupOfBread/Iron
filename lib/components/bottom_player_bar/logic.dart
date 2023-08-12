@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:iron/common/values/AlbumDataExample.dart';
 import 'package:iron/common/values/ArtistDataExample.dart';
 import 'package:iron/common/values/SongDataExample.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'state.dart';
 
 enum PlayerState { paused, playing, loading }
@@ -31,9 +34,13 @@ class ProgressBarState {
 class BottomPlayerBarLogic extends GetxController {
   final BottomPlayerBarState state = BottomPlayerBarState();
   final isar = GetIt.I<Isar>();
+  final dio = Dio();
 
   //当前播放音乐
   final currentSongNotifier = ValueNotifier<Song>(Song());
+
+  //当前音乐歌词
+  final currentSongLyricNotifier = ValueNotifier<String>('');
 
   //播放按键
   final playerPlayButtonNotifier =
@@ -72,7 +79,6 @@ class BottomPlayerBarLogic extends GetxController {
   }
 
   Future<String> getSongPlayUrl(String songId) async {
-    final dio = Dio();
     String originUrl =
         'https://music.163.com/song/media/outer/url?id=' + songId + '.mp3';
     final response = await dio.get(originUrl);
@@ -165,6 +171,10 @@ class BottomPlayerBarLogic extends GetxController {
       // update current song
       currentSongNotifier.value = currentSong;
 
+      // final response =
+      //     await dio.get('http://192.168.1.13:3000/lyric?id=$currentSongId');
+      // currentSongLyricNotifier.value = response.data['lrc']['lyric'];
+
       // update playlist
       final playlist = sequenceState.effectiveSequence;
       final titles = playlist.map((item) => item.tag as String).toList();
@@ -256,6 +266,9 @@ class BottomPlayerBarLogic extends GetxController {
         _audioPlayer.setAudioSource(_playlist);
       }
 
+      _audioPlayer.play();
+      playerPlayButtonNotifier.value = PlayerState.playing;
+
       if (songIdList.length > 1) {
         for (var i = 1; i < songList.length; i++) {
           if (songList[i].songSourceType == SongSourceType.network) {
@@ -269,5 +282,22 @@ class BottomPlayerBarLogic extends GetxController {
         }
       }
     }
+  }
+
+  Future<void> testLoadLocalSongs() async {
+    await Permission.storage.request();
+    await Permission.audio.request();
+
+    final myDir = Directory("""/storage/emulated/0/Music/Speak now""");
+
+    final List<FileSystemEntity> list = await myDir.list().toList();
+
+    AudioSource audioSource = AudioSource.file(list[3].path, tag: '2059793928');
+
+    _playlist = ConcatenatingAudioSource(children: [audioSource]);
+    _audioPlayer.setAudioSource(_playlist);
+
+    _audioPlayer.play();
+    playerPlayButtonNotifier.value = PlayerState.playing;
   }
 }
