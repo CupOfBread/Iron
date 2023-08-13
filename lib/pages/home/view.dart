@@ -7,6 +7,7 @@ import 'package:iron/pages/cabinet/view.dart';
 import 'package:iron/pages/discover/view.dart';
 import 'package:iron/pages/my/view.dart';
 
+import 'package:iron/router/app_pages.dart';
 import 'logic.dart';
 
 class HomePage extends StatelessWidget {
@@ -26,7 +27,39 @@ class HomePage extends StatelessWidget {
       endDrawer: Drawer(
         child: SafeArea(
           child: ListView(
-            children: [DrawerHeader(child: Text('Header'))],
+            children: [
+              DrawerHeader(
+                  child: Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                height: double.infinity,
+                child: Text('Header'),
+              )),
+              ListView(
+                shrinkWrap: true,
+                children: [
+                  Builder(
+                    builder: (context) {
+                      return ListTile(
+                        title: Text(
+                          '媒体来源',
+                          style: TextStyle(fontWeight: FontWeight.w900, color: Colors.black87),
+                        ),
+                        leading: Image.asset(
+                          "assets/images/icon/media_source.png",
+                          width: 30,
+                          height: 30,
+                        ),
+                        onTap: () {
+                          Scaffold.of(context).closeEndDrawer();
+                          Get.toNamed(AppRoutes.MediaSource);
+                        },
+                      );
+                    },
+                  )
+                ],
+              )
+            ],
           ),
         ),
       ),

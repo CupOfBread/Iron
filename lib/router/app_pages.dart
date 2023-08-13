@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:iron/pages/album_detail/view.dart';
 import 'package:iron/pages/artist_detail/view.dart';
 import 'package:iron/pages/home/view.dart';
+import 'package:iron/pages/media_source/view.dart';
 import 'package:iron/pages/player/view.dart';
 
 part 'app_routes.dart';
@@ -25,6 +26,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.Artist,
       page: () => ArtistDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.MediaSource,
+      page: () => MediaSourcePage(),
     ),
   ];
 }
