@@ -200,11 +200,13 @@ class PlayerPage extends StatelessWidget {
                                                       size: 32,
                                                     ),
                                                     onPressed: () async {
-                                                      playerBarLogic.testLoadLocalSongs();
+                                                      // playerBarLogic.testLoadLocalSongs();
                                                     },
                                                   ),
                                                   IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      // playerBarLogic.testAudioService();
+                                                    },
                                                     icon: Icon(
                                                       Icons.replay_10,
                                                       color: Color(0xFFF2F2F2),
@@ -288,7 +290,7 @@ class PlayerPage extends StatelessWidget {
                                     return IconButton(
                                       icon: Icon(
                                         Icons.skip_previous,
-                                        color: Color(0xFFF2F2F2),
+                                        color: isFirst ? Colors.white38 : Colors.white,
                                         size: 40,
                                       ),
                                       onPressed: (isFirst) ? null : playerBarLogic.onPreviousSongButtonPressed,
@@ -338,7 +340,7 @@ class PlayerPage extends StatelessWidget {
                                     return IconButton(
                                       icon: Icon(
                                         Icons.skip_next,
-                                        color: Color(0xFFF2F2F2),
+                                        color: isLast ? Colors.white38 : Colors.white,
                                         size: 40,
                                       ),
                                       onPressed: (isLast) ? null : playerBarLogic.onNextSongButtonPressed,

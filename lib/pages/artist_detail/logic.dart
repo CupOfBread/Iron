@@ -37,7 +37,6 @@ class ArtistDetailLogic extends GetxController {
       songIdList.add(element.wyyId);
     });
 
-    print(songIdList);
 
     bottomBarLogic.loadNewPlaylist(songIdList);
   }

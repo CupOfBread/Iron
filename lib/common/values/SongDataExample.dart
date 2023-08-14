@@ -17,8 +17,6 @@ class SongDataExample {
         ..albumName = '回忆旅行'
         ..artistIDs = ['12140120']
         ..albumImageUrl = 'http://p1.music.126.net/Dzq7Ek9-ikTtQCQeLZXV6g==/109951167134950700.jpg?param=400y400'
-        ..path =
-            'https://m804.music.126.net/20230809234437/b788ab90fe3ea58af13e0b8ef003890b/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/13385789410/e12f/a3da/d2cc/f62766d7d310c9de4ce6132038bd5d4a.m4a?authSecret=00000189dae1c90617e10aa468411899'
         ..artistNames = ['树 Itsuki'],
       Song()
         ..songSourceType = SongSourceType.network
@@ -131,8 +129,6 @@ class SongDataExample {
         ..trackName = '流沙 (Reimagined)'
         ..albumName = '流沙 (Reimagined)'
         ..albumImageUrl = 'http://p1.music.126.net/RHvOnjS6lxCxRRXlH1FjIw==/109951168704179066.jpg?param=400y400'
-        ..path =
-            'https://m704.music.126.net/20230809234950/64dfeefdd2443b08732287c1c4df8a62/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/29065763867/5bcb/13f6/a8a7/dd49979f3ebdbcf8b7da3b2a8c0625a9.m4a?authSecret=00000189dae68f76052e0aa468270354'
         ..artistNames = ['陶喆'],
       Song()
         ..songSourceType = SongSourceType.network
@@ -140,8 +136,6 @@ class SongDataExample {
         ..trackName = 'Pet'
         ..albumName = 'PET'
         ..albumImageUrl = 'http://p2.music.126.net/8592UX67UjpPN_SXP1biog==/109951168729414039.jpg?param=400y400'
-        ..path =
-            'https://m704.music.126.net/20230809234612/030369654a4c707cce186c85f0ed4667/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/29216943251/eaaf/17dc/ec5e/882eb30774659460505415ac42282acd.m4a?authSecret=00000189dae33c2110040aaba0cc089d'
         ..artistNames = ['渡口']
     ];
     return songList;

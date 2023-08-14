@@ -163,10 +163,11 @@ class MediaSourcePage extends StatelessWidget {
                                 '帮助',
                                 style: TextStyle(color: Colors.indigoAccent, fontWeight: FontWeight.w900, fontSize: 13),
                               ),
-                            ),Container(
+                            ),
+                            Container(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                '这里是帮助文档帮助文档帮助文档帮助文档帮助文档帮助文档帮助文档帮助文档帮助文档',
+                                '在这个页面，可以选取包含歌曲的文件夹，烫斗音乐将会从选区的文件夹中自动扫描歌曲并加载。',
                                 style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w900, fontSize: 11),
                               ),
                             ),
