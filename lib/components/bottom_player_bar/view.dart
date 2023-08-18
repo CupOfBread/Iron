@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:iron/common/models/Song.dart';
 import 'package:iron/pages/player/view.dart';
 import 'package:marquee/marquee.dart';
@@ -16,6 +17,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
     final logic = Get.put(BottomPlayerBarLogic());
     final state = Get.find<BottomPlayerBarLogic>().state;
     final playerBarLogic = Get.put(BottomPlayerBarLogic());
+    var localAlbumImageBox = Hive.box('local_album_image');
 
     return Container(
       width: double.infinity,
@@ -58,7 +60,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
                         child: ValueListenableBuilder<Song>(
                           valueListenable: playerBarLogic.currentSongNotifier,
                           builder: (_, value, __) {
-                            return CachedNetworkImage(
+                            return value.songSourceType==SongSourceType.network? CachedNetworkImage(
                               imageUrl: value.albumImageUrl,
                               width: 44,
                               height: 44,
@@ -66,6 +68,11 @@ class BottomPlayerBarComponent extends StatelessWidget {
                               placeholder: (context, url) => CircularProgressIndicator(
                                 color: Colors.black12,
                               ),
+                            ) : Image.memory(
+                              localAlbumImageBox.get(value.albumName),
+                              width: 54,
+                              height: 54,
+                              fit: BoxFit.cover,
                             );
                           },
                         ),

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:iron/common/models/Song.dart';
 
 import 'logic.dart';
 
@@ -16,7 +18,7 @@ class _SongListComponent extends State<SongListComponent> with AutomaticKeepAliv
   @override
   Widget build(BuildContext context) {
     logic.getSongList();
-
+    var localAlbumImageBox = Hive.box('local_album_image');
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -140,12 +142,19 @@ class _SongListComponent extends State<SongListComponent> with AutomaticKeepAliv
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
-                                      child: CachedNetworkImage(
-                                        imageUrl: state.songList[index].albumImageUrl,
-                                        width: 54,
-                                        height: 54,
-                                        fit: BoxFit.cover,
-                                      ),
+                                      child: state.songList[index] == SongSourceType.network
+                                          ? CachedNetworkImage(
+                                              imageUrl: state.songList[index].albumImageUrl,
+                                              width: 54,
+                                              height: 54,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.memory(
+                                              localAlbumImageBox.get(state.songList[index].albumName),
+                                              width: 54,
+                                              height: 54,
+                                              fit: BoxFit.cover,
+                                            ),
                                     ),
                                   ),
                                 ),

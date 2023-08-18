@@ -17,79 +17,84 @@ const SongSchema = CollectionSchema(
   name: r'Song',
   id: -5548886644249537934,
   properties: {
-    r'albumId': PropertySchema(
+    r'albumArt': PropertySchema(
       id: 0,
+      name: r'albumArt',
+      type: IsarType.longList,
+    ),
+    r'albumId': PropertySchema(
+      id: 1,
       name: r'albumId',
       type: IsarType.string,
     ),
     r'albumImageUrl': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'albumImageUrl',
       type: IsarType.string,
     ),
     r'albumLength': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'albumLength',
       type: IsarType.long,
     ),
     r'albumName': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'albumName',
       type: IsarType.string,
     ),
     r'artistIDs': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'artistIDs',
       type: IsarType.stringList,
     ),
     r'artistNames': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'artistNames',
       type: IsarType.stringList,
     ),
     r'genre': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'genre',
       type: IsarType.stringList,
     ),
     r'ironId': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'ironId',
       type: IsarType.string,
     ),
     r'path': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'path',
       type: IsarType.string,
     ),
     r'publishTime': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'publishTime',
       type: IsarType.dateTime,
     ),
     r'songSourceType': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'songSourceType',
       type: IsarType.byte,
       enumMap: _SongsongSourceTypeEnumValueMap,
     ),
     r'trackAlias': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'trackAlias',
       type: IsarType.string,
     ),
     r'trackName': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'trackName',
       type: IsarType.string,
     ),
     r'trackNumber': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'trackNumber',
       type: IsarType.long,
     ),
     r'wyyId': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'wyyId',
       type: IsarType.string,
     )
@@ -114,6 +119,7 @@ int _songEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.albumArt.length * 8;
   bytesCount += 3 + object.albumId.length * 3;
   bytesCount += 3 + object.albumImageUrl.length * 3;
   bytesCount += 3 + object.albumName.length * 3;
@@ -152,21 +158,22 @@ void _songSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.albumId);
-  writer.writeString(offsets[1], object.albumImageUrl);
-  writer.writeLong(offsets[2], object.albumLength);
-  writer.writeString(offsets[3], object.albumName);
-  writer.writeStringList(offsets[4], object.artistIDs);
-  writer.writeStringList(offsets[5], object.artistNames);
-  writer.writeStringList(offsets[6], object.genre);
-  writer.writeString(offsets[7], object.ironId);
-  writer.writeString(offsets[8], object.path);
-  writer.writeDateTime(offsets[9], object.publishTime);
-  writer.writeByte(offsets[10], object.songSourceType.index);
-  writer.writeString(offsets[11], object.trackAlias);
-  writer.writeString(offsets[12], object.trackName);
-  writer.writeLong(offsets[13], object.trackNumber);
-  writer.writeString(offsets[14], object.wyyId);
+  writer.writeLongList(offsets[0], object.albumArt);
+  writer.writeString(offsets[1], object.albumId);
+  writer.writeString(offsets[2], object.albumImageUrl);
+  writer.writeLong(offsets[3], object.albumLength);
+  writer.writeString(offsets[4], object.albumName);
+  writer.writeStringList(offsets[5], object.artistIDs);
+  writer.writeStringList(offsets[6], object.artistNames);
+  writer.writeStringList(offsets[7], object.genre);
+  writer.writeString(offsets[8], object.ironId);
+  writer.writeString(offsets[9], object.path);
+  writer.writeDateTime(offsets[10], object.publishTime);
+  writer.writeByte(offsets[11], object.songSourceType.index);
+  writer.writeString(offsets[12], object.trackAlias);
+  writer.writeString(offsets[13], object.trackName);
+  writer.writeLong(offsets[14], object.trackNumber);
+  writer.writeString(offsets[15], object.wyyId);
 }
 
 Song _songDeserialize(
@@ -176,24 +183,25 @@ Song _songDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Song();
-  object.albumId = reader.readString(offsets[0]);
-  object.albumImageUrl = reader.readString(offsets[1]);
-  object.albumLength = reader.readLong(offsets[2]);
-  object.albumName = reader.readString(offsets[3]);
-  object.artistIDs = reader.readStringList(offsets[4]) ?? [];
-  object.artistNames = reader.readStringList(offsets[5]) ?? [];
-  object.genre = reader.readStringList(offsets[6]) ?? [];
+  object.albumArt = reader.readLongList(offsets[0]) ?? [];
+  object.albumId = reader.readString(offsets[1]);
+  object.albumImageUrl = reader.readString(offsets[2]);
+  object.albumLength = reader.readLong(offsets[3]);
+  object.albumName = reader.readString(offsets[4]);
+  object.artistIDs = reader.readStringList(offsets[5]) ?? [];
+  object.artistNames = reader.readStringList(offsets[6]) ?? [];
+  object.genre = reader.readStringList(offsets[7]) ?? [];
   object.id = id;
-  object.ironId = reader.readString(offsets[7]);
-  object.path = reader.readString(offsets[8]);
-  object.publishTime = reader.readDateTime(offsets[9]);
+  object.ironId = reader.readString(offsets[8]);
+  object.path = reader.readString(offsets[9]);
+  object.publishTime = reader.readDateTime(offsets[10]);
   object.songSourceType =
-      _SongsongSourceTypeValueEnumMap[reader.readByteOrNull(offsets[10])] ??
+      _SongsongSourceTypeValueEnumMap[reader.readByteOrNull(offsets[11])] ??
           SongSourceType.local;
-  object.trackAlias = reader.readString(offsets[11]);
-  object.trackName = reader.readString(offsets[12]);
-  object.trackNumber = reader.readLong(offsets[13]);
-  object.wyyId = reader.readString(offsets[14]);
+  object.trackAlias = reader.readString(offsets[12]);
+  object.trackName = reader.readString(offsets[13]);
+  object.trackNumber = reader.readLong(offsets[14]);
+  object.wyyId = reader.readString(offsets[15]);
   return object;
 }
 
@@ -205,35 +213,37 @@ P _songDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongList(offset) ?? []) as P;
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readLong(offset)) as P;
-    case 3:
       return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readLong(offset)) as P;
     case 4:
-      return (reader.readStringList(offset) ?? []) as P;
+      return (reader.readString(offset)) as P;
     case 5:
       return (reader.readStringList(offset) ?? []) as P;
     case 6:
       return (reader.readStringList(offset) ?? []) as P;
     case 7:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringList(offset) ?? []) as P;
     case 8:
       return (reader.readString(offset)) as P;
     case 9:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 10:
+      return (reader.readDateTime(offset)) as P;
+    case 11:
       return (_SongsongSourceTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           SongSourceType.local) as P;
-    case 11:
-      return (reader.readString(offset)) as P;
     case 12:
       return (reader.readString(offset)) as P;
     case 13:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 14:
+      return (reader.readLong(offset)) as P;
+    case 15:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -337,6 +347,143 @@ extension SongQueryWhere on QueryBuilder<Song, Song, QWhereClause> {
 }
 
 extension SongQueryFilter on QueryBuilder<Song, Song, QFilterCondition> {
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtElementEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'albumArt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtElementGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'albumArt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtElementLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'albumArt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtElementBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'albumArt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'albumArt',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'albumArt',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'albumArt',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'albumArt',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'albumArt',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Song, Song, QAfterFilterCondition> albumArtLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'albumArt',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
   QueryBuilder<Song, Song, QAfterFilterCondition> albumIdEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -2586,6 +2733,12 @@ extension SongQuerySortThenBy on QueryBuilder<Song, Song, QSortThenBy> {
 }
 
 extension SongQueryWhereDistinct on QueryBuilder<Song, Song, QDistinct> {
+  QueryBuilder<Song, Song, QDistinct> distinctByAlbumArt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'albumArt');
+    });
+  }
+
   QueryBuilder<Song, Song, QDistinct> distinctByAlbumId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -2690,6 +2843,12 @@ extension SongQueryProperty on QueryBuilder<Song, Song, QQueryProperty> {
   QueryBuilder<Song, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Song, List<int>, QQueryOperations> albumArtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'albumArt');
     });
   }
 

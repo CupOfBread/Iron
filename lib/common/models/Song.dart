@@ -28,6 +28,9 @@ class Song {
   //专辑图片
   String albumImageUrl = 'https://pic.imgdb.cn/item/64ca03a11ddac507cc039568.png';
 
+  //专辑图片
+  List<int> albumArt = [];
+
   //专辑ID
   String albumId = '';
 
@@ -48,7 +51,7 @@ class Song {
 
   //歌曲来源
   @enumerated
-  SongSourceType songSourceType = SongSourceType.local;
+  SongSourceType songSourceType = SongSourceType.network;
 
   //歌曲地址
   String path = '';

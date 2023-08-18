@@ -22,7 +22,11 @@ class SongListLogic extends GetxController {
     List<String> songIdList = [];
 
     songList.forEach((element) {
-      songIdList.add(element.wyyId);
+      if (element.songSourceType == SongSourceType.network) {
+        songIdList.add(element.wyyId);
+      } else {
+        songIdList.add(element.id.toString());
+      }
     });
 
     bottomBarLogic.loadNewPlaylist(songIdList);

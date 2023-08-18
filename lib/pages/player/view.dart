@@ -6,6 +6,7 @@ import 'package:flash/flash.dart';
 import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:iron/common/models/Song.dart';
 import 'package:iron/components/bottom_player_bar/logic.dart';
 import 'package:iron/components/lyric/view.dart';
@@ -20,6 +21,7 @@ class PlayerPage extends StatelessWidget {
     final logic = Get.put(PlayerLogic());
     final state = Get.find<PlayerLogic>().state;
     final playerBarLogic = Get.put(BottomPlayerBarLogic());
+    var localAlbumImageBox = Hive.box('local_album_image');
 
     return DismissiblePage(
       onDismissed: () {
@@ -49,10 +51,15 @@ class PlayerPage extends StatelessWidget {
                         child: ValueListenableBuilder<Song>(
                           valueListenable: playerBarLogic.currentSongNotifier,
                           builder: (_, value, __) {
-                            return Image.network(
+                            return value.songSourceType==SongSourceType.network? Image.network(
                               value.albumImageUrl,
                               width: double.infinity,
                               height: double.infinity,
+                              fit: BoxFit.cover,
+                            ): Image.memory(
+                              localAlbumImageBox.get(value.albumName),
+                              width: 54,
+                              height: 54,
                               fit: BoxFit.cover,
                             );
                           },
@@ -175,10 +182,15 @@ class PlayerPage extends StatelessWidget {
                                                   child: ValueListenableBuilder<Song>(
                                                     valueListenable: playerBarLogic.currentSongNotifier,
                                                     builder: (_, value, __) {
-                                                      return Image.network(
+                                                      return value.songSourceType==SongSourceType.network? Image.network(
                                                         value.albumImageUrl,
-                                                        width: 300,
-                                                        height: 300,
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                      ): Image.memory(
+                                                        localAlbumImageBox.get(value.albumName),
+                                                        width: 54,
+                                                        height: 54,
                                                         fit: BoxFit.cover,
                                                       );
                                                     },

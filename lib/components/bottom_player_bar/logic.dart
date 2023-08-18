@@ -135,7 +135,7 @@ class BottomPlayerBarLogic extends GetxController {
     _audioHandler.mediaItem.listen((mediaItem) async {
       if (mediaItem == null) return;
 
-      final String currentSongId = mediaItem.id;
+      String currentSongId = mediaItem.id;
 
       final currentSong = await isar.songs
               .filter()
@@ -149,9 +149,10 @@ class BottomPlayerBarLogic extends GetxController {
 
       currentSongNotifier.value = currentSong;
 
-      final response =
-          await dio.get('http://192.168.1.13:3000/lyric?id=$currentSongId');
-      currentSongLyricNotifier.value = response.data['lrc']['lyric'];
+      if (currentSong.wyyId != '') {
+        final response = await dio.get('http://192.168.1.12:3000/lyric?id=$currentSongId');
+        currentSongLyricNotifier.value = response.data['lrc']['lyric'];
+      }
 
       _updateSkipButtons();
     });

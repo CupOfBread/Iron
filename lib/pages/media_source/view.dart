@@ -52,8 +52,10 @@ class MediaSourcePage extends StatelessWidget {
                         padding: EdgeInsetsDirectional.fromSTEB(8, 10, 8, 10),
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.white),
                         child: FilledButton(
-                          onPressed: () {},
-                          child: Text('开始扫描'),
+                          onPressed: () {
+                            logic.scanPaths();
+                          },
+                          child: Text('扫描曲库 & 更新曲库'),
                           style: ButtonStyle(
                               minimumSize: MaterialStateProperty.all(Size(double.infinity, 40)),
                               backgroundColor: MaterialStateProperty.all(Colors.indigoAccent)),
@@ -138,7 +140,9 @@ class MediaSourcePage extends StatelessWidget {
                                   );
                                 }),
                             FilledButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                logic.test();
+                              },
                               child: Text('添加自定义文件夹'),
                               style: ButtonStyle(
                                   minimumSize: MaterialStateProperty.all(Size(double.infinity, 40)),

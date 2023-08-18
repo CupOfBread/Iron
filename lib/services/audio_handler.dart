@@ -99,11 +99,16 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       List<MediaItem> mediaItemList = [];
 
       for (var value in sequence) {
-        final currentSong =
-            await isar.songs.filter().wyyIdEqualTo(value.tag).or().ironIdEqualTo(value.tag).or().idEqualTo(int.parse(value.tag)).findFirst() ??
-                Song();
-        mediaItemList.add(
-            MediaItem(id: value.tag, title: currentSong.trackName, artUri: Uri.parse(currentSong.albumImageUrl), artist: currentSong.artistNames[0]));
+        String id;
+
+        if (value.tag is int) {
+          id = value.tag.toString();
+        } else {
+          id = value.tag;
+        }
+        final currentSong = await isar.songs.filter().wyyIdEqualTo(id).or().ironIdEqualTo(id).or().idEqualTo(int.parse(id)).findFirst() ?? Song();
+        mediaItemList.add(MediaItem(
+            id: id.toString(), title: currentSong.trackName, artUri: Uri.parse(currentSong.albumImageUrl), artist: currentSong.artistNames[0]));
       }
 
       queue.add(mediaItemList);
@@ -135,19 +140,21 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   Future<void> updateQueue(List<MediaItem> queue) async {
     List<Song> songList = await isar.songs
         .filter()
-        .anyOf(queue, (q, element) => q.wyyIdEqualTo(element.id).or().ironIdEqualTo(element.id).idEqualTo(int.parse(element.id)))
+        .anyOf(queue, (q, element) => q.wyyIdEqualTo(element.id).or().ironIdEqualTo(element.id).or().idEqualTo(int.parse(element.id)))
         .findAll();
 
     if (songList.isNotEmpty) {
       //先处理第一首歌曲
+      AudioSource audioSource;
       if (songList[0].songSourceType == SongSourceType.network) {
         final String playUrl = await getWyySongPlayUrl(songList[0].wyyId);
-        AudioSource audioSource = AudioSource.uri(Uri.parse(playUrl), tag: songList[0].wyyId);
-
-        await _playlist.clear();
-        await _playlist.add(audioSource);
-        _player.play();
+        audioSource = AudioSource.uri(Uri.parse(playUrl), tag: songList[0].wyyId);
+      } else {
+        audioSource = AudioSource.file(songList[0].path, tag: songList[0].id);
       }
+      await _playlist.clear();
+      await _playlist.add(audioSource);
+      _player.play();
 
       if (songList.length > 1) {
         for (var i = 1; i < songList.length; i++) {
@@ -158,6 +165,20 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
           }
         }
       }
+
+      queue.clear();
+      queue.addAll(songList.map((e) {
+        print(MediaItem(
+            id: e.id.toString(),
+            title: e.trackName,
+            artist: e.artistNames[0],
+            artUri: e.songSourceType == SongSourceType.network ? Uri.parse(e.albumImageUrl) : null));
+        return MediaItem(
+            id: e.id.toString(),
+            title: e.trackName,
+            artist: e.artistNames[0],
+            artUri: e.songSourceType == SongSourceType.network ? Uri.parse(e.albumImageUrl) : null);
+      }).toList());
     }
   }
 
