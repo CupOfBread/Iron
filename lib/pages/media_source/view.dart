@@ -11,6 +11,8 @@ class MediaSourcePage extends StatelessWidget {
     final logic = Get.put(MediaSourceLogic());
     final state = Get.find<MediaSourceLogic>().state;
 
+    logic.initPathList();
+
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(55),
@@ -53,7 +55,7 @@ class MediaSourcePage extends StatelessWidget {
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.white),
                         child: FilledButton(
                           onPressed: () {
-                            logic.scanPaths();
+                            logic.scanPaths(context);
                           },
                           child: Text('扫描曲库 & 更新曲库'),
                           style: ButtonStyle(
@@ -77,71 +79,75 @@ class MediaSourcePage extends StatelessWidget {
                                 style: TextStyle(color: Colors.indigoAccent, fontWeight: FontWeight.w900, fontSize: 13),
                               ),
                             ),
-                            ListView.builder(
-                                itemCount: 3,
-                                shrinkWrap: true,
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 12),
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                                    child: Container(
-                                      width: double.infinity,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
-                                            child: Icon(
-                                              Icons.folder_special,
-                                              color: Colors.indigoAccent,
-                                              size: 36,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              width: 100,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Music',
-                                                    style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight: FontWeight.w900,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '/storage/emulated/0/Music',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF727272),
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ],
+                            GetBuilder<MediaSourceLogic>(builder: (logic) {
+                              return ListView.builder(
+                                  itemCount: state.paths.length,
+                                  shrinkWrap: true,
+                                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 12),
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                      child: Container(
+                                        width: double.infinity,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                                              child: Icon(
+                                                Icons.folder_special,
+                                                color: Colors.indigoAccent,
+                                                size: 36,
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
-                                            child: Icon(
-                                              Icons.delete_forever_outlined,
-                                              color: Colors.black38,
-                                              size: 18,
+                                            Expanded(
+                                              child: Container(
+                                                padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      state.paths[index].path.substring(state.paths[index].path.lastIndexOf('/') + 1),
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.w900,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      state.paths[index].path,
+                                                      style: TextStyle(
+                                                        color: Color(0xFF727272),
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                            Padding(
+                                              padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
+                                              child: IconButton(
+                                                icon: Icon(
+                                                  Icons.delete_forever_outlined,
+                                                  color: Colors.black38,
+                                                  size: 18,
+                                                ),
+                                                onPressed: () {
+                                                  logic.removePath(index);
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }),
+                                    );
+                                  });
+                            }),
                             FilledButton(
                               onPressed: () {
-                                logic.test();
+                                logic.addPath(context);
                               },
                               child: Text('添加自定义文件夹'),
                               style: ButtonStyle(

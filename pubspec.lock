@@ -374,6 +374,14 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "1.0.0+1"
+  flutter_overlay_loader:
+    dependency: "direct main"
+    description:
+      name: flutter_overlay_loader
+      sha256: d447edb434269e5f639d03018577676e7e4b16ad4d619d028ed464f3a8180984
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "2.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -616,6 +624,15 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "1.0.4"
+  motion_toast:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: de68a3876f8c9019c013eb4fd29944740812b7cd
+      url: "https://github.com/koukibadr/Motion-Toast.git"
+    source: git
+    version: "2.7.8"
   octo_image:
     dependency: transitive
     description:

@@ -55,6 +55,9 @@ dependencies:
   # 获取媒体信息
   flutter_media_metadata: ^1.0.0+1
   flash: ^3.0.5+1
+  motion_toast:
+    git: https://github.com/koukibadr/Motion-Toast.git
+  flutter_overlay_loader: ^2.0.0
   dio: ^5.3.2
   file_picker: ^5.3.3
   # 列表动画

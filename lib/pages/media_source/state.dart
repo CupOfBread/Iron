@@ -1,5 +1,7 @@
+import 'package:iron/common/models/MediaSourcePath.dart';
+
 class MediaSourceState {
-  MediaSourceState() {
-    ///Initialize variables
-  }
+  List<MediaSourcePath> paths = [];
+
+  MediaSourceState() {}
 }

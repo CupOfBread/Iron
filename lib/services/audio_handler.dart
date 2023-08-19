@@ -99,6 +99,10 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       List<MediaItem> mediaItemList = [];
 
       for (var value in sequence) {
+        if (value.tag.toString().isEmpty) {
+          continue;
+        }
+
         String id;
 
         if (value.tag is int) {
@@ -106,11 +110,11 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         } else {
           id = value.tag;
         }
+
         final currentSong = await isar.songs.filter().wyyIdEqualTo(id).or().ironIdEqualTo(id).or().idEqualTo(int.parse(id)).findFirst() ?? Song();
         mediaItemList.add(MediaItem(
             id: id.toString(), title: currentSong.trackName, artUri: Uri.parse(currentSong.albumImageUrl), artist: currentSong.artistNames[0]));
       }
-
       queue.add(mediaItemList);
     });
   }
