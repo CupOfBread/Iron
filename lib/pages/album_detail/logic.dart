@@ -19,12 +19,10 @@ class AlbumDetailLogic extends GetxController {
         .or()
         .wyyIdEqualTo(args["wyyId"])
         .findFirst())!;
+
+
     state.songList = await isar.songs
-        .filter()
-        .anyOf(state.album.songsIds,
-            (q, String element) => q.wyyIdEqualTo(element))
-        .or()
-        .albumNameEqualTo(state.album.albumName)
+        .filter().albumNameEqualTo(state.album.albumName)
         .findAll();
     update();
   }

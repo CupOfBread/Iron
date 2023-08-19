@@ -148,6 +148,7 @@ class MediaSourcePage extends StatelessWidget {
                             FilledButton(
                               onPressed: () {
                                 logic.addPath(context);
+                                // logic.test();
                               },
                               child: Text('添加自定义文件夹'),
                               style: ButtonStyle(

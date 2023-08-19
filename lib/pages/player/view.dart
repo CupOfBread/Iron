@@ -1,12 +1,10 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:dismissible_page/dismissible_page.dart';
-import 'package:flash/flash.dart';
-import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:iron/common/models/Song.dart';
 import 'package:iron/components/bottom_player_bar/logic.dart';
 import 'package:iron/components/lyric/view.dart';
@@ -21,7 +19,6 @@ class PlayerPage extends StatelessWidget {
     final logic = Get.put(PlayerLogic());
     final state = Get.find<PlayerLogic>().state;
     final playerBarLogic = Get.put(BottomPlayerBarLogic());
-    var localAlbumImageBox = Hive.box('local_album_image');
 
     return DismissiblePage(
       onDismissed: () {
@@ -51,17 +48,19 @@ class PlayerPage extends StatelessWidget {
                         child: ValueListenableBuilder<Song>(
                           valueListenable: playerBarLogic.currentSongNotifier,
                           builder: (_, value, __) {
-                            return value.songSourceType==SongSourceType.network? Image.network(
-                              value.albumImageUrl,
-                              width: double.infinity,
-                              height: double.infinity,
-                              fit: BoxFit.cover,
-                            ): Image.memory(
-                              localAlbumImageBox.get(value.albumName),
-                              width: 54,
-                              height: 54,
-                              fit: BoxFit.cover,
-                            );
+                            return value.songSourceType == SongSourceType.network
+                                ? Image.network(
+                                    value.albumImageUrl,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.file(
+                                    File('${logic.GLOBAL_VALUE.applicationDocumentsDirectory.path}/${value.albumName}.jpg'),
+                                    width: 54,
+                                    height: 54,
+                                    fit: BoxFit.cover,
+                                  );
                           },
                         ),
                       ),
@@ -108,7 +107,8 @@ class PlayerPage extends StatelessWidget {
                                         return Text(
                                           value.trackName,
                                           textAlign: TextAlign.start,
-                                          maxLines: 2,
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontFamily: 'NotoSerifSC',
                                             color: Color(0xFFFBFBFB),
@@ -154,7 +154,10 @@ class PlayerPage extends StatelessWidget {
                                     child: TabBarView(
                                       children: [
                                         Container(
-                                          child: Text("===NULL==="),
+                                          child: Text(
+                                            "===暂时还没想到这里放什么===",
+                                            style: TextStyle(color: Colors.white),
+                                          ),
                                         ),
                                         Column(
                                           mainAxisSize: MainAxisSize.max,
@@ -182,17 +185,19 @@ class PlayerPage extends StatelessWidget {
                                                   child: ValueListenableBuilder<Song>(
                                                     valueListenable: playerBarLogic.currentSongNotifier,
                                                     builder: (_, value, __) {
-                                                      return value.songSourceType==SongSourceType.network? Image.network(
-                                                        value.albumImageUrl,
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        fit: BoxFit.cover,
-                                                      ): Image.memory(
-                                                        localAlbumImageBox.get(value.albumName),
-                                                        width: 54,
-                                                        height: 54,
-                                                        fit: BoxFit.cover,
-                                                      );
+                                                      return value.songSourceType == SongSourceType.network
+                                                          ? Image.network(
+                                                              value.albumImageUrl,
+                                                              width: double.infinity,
+                                                              height: double.infinity,
+                                                              fit: BoxFit.cover,
+                                                            )
+                                                          : Image.file(
+                                                              File('${logic.GLOBAL_VALUE.applicationDocumentsDirectory.path}/${value.albumName}.jpg'),
+                                                              width: 54,
+                                                              height: 54,
+                                                              fit: BoxFit.cover,
+                                                            );
                                                     },
                                                   ),
                                                 ),
@@ -239,13 +244,7 @@ class PlayerPage extends StatelessWidget {
                                                       color: Color(0xFFF2F2F2),
                                                       size: 32,
                                                     ),
-                                                    onPressed: () {
-                                                      playerBarLogic.loadExampleData();
-                                                      context.showFlash(
-                                                          duration: const Duration(seconds: 2),
-                                                          builder: (context, controller) => FlashBar(
-                                                              position: FlashPosition.top, controller: controller, content: Text('加载示例数据完成')));
-                                                    },
+                                                    onPressed: () {},
                                                   ),
                                                 ],
                                               ),

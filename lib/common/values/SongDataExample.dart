@@ -20,53 +20,11 @@ class SongDataExample {
         ..artistNames = ['树 Itsuki'],
       Song()
         ..songSourceType = SongSourceType.network
-        ..wyyId = '185879'
-        ..trackName = '听妈妈的话'
-        ..albumName = '依然范特西'
-        ..albumImageUrl = 'http://p1.music.126.net/06Yhj36Qu3ZCQJklc9MNKg==/7980255395852522.jpg?param=400y400'
-        ..artistNames = ['周杰伦'],
-      Song()
-        ..songSourceType = SongSourceType.network
-        ..wyyId = '287242'
-        ..trackName = '眼泪成诗'
-        ..albumName = '完美的一天'
-        ..albumImageUrl = 'http://p2.music.126.net/fDHMWWX7pLkAxVPK10OQ7g==/109951168311119114.jpg?param=400y400'
-        ..artistNames = ['孙燕姿'],
-      Song()
-        ..songSourceType = SongSourceType.network
-        ..wyyId = '287244'
-        ..trackName = '隐形人'
-        ..albumName = '完美的一天'
-        ..albumImageUrl = 'http://p2.music.126.net/fDHMWWX7pLkAxVPK10OQ7g==/109951168311119114.jpg?param=400y400'
-        ..artistNames = ['孙燕姿'],
-      Song()
-        ..songSourceType = SongSourceType.network
-        ..wyyId = '185813'
-        ..trackName = '阳光宅男'
-        ..albumName = '我很忙'
-        ..albumImageUrl = 'http://p1.music.126.net/STWQpRLgUBOcXQIDPoEL_A==/109951163533011733.jpg?param=400y400'
-        ..artistNames = ['周杰伦'],
-      Song()
-        ..songSourceType = SongSourceType.network
-        ..wyyId = '417250561'
-        ..trackName = '不该'
-        ..albumName = '周杰伦的床边故事'
-        ..albumImageUrl = 'http://p2.music.126.net/cUTk0ewrQtYGP2YpPZoUng==/3265549553028224.jpg?param=400y400'
-        ..artistNames = ['周杰伦'],
-      Song()
-        ..songSourceType = SongSourceType.network
         ..wyyId = '33410937'
         ..trackName = 'Force of Nature'
         ..albumName = 'Not an Apology'
         ..albumImageUrl = 'http://p1.music.126.net/L17iiSYgW1euAmbIMzmn8g==/2892815094125041.jpg?param=400y400'
         ..artistNames = ['Bea Miller'],
-      Song()
-        ..songSourceType = SongSourceType.network
-        ..wyyId = '185868'
-        ..trackName = '不能说的秘密'
-        ..albumName = '不能说的秘密 电影原声带'
-        ..albumImageUrl = 'http://p2.music.126.net/AWFCKGo1ST-OMXZ0nFDwJQ==/109951165967134415.jpg?param=400y400'
-        ..artistNames = ['周杰伦'],
       Song()
         ..songSourceType = SongSourceType.network
         ..wyyId = '25882976'
@@ -102,27 +60,6 @@ class SongDataExample {
         ..albumName = '飞行器的执行周期'
         ..albumImageUrl = 'http://p1.music.126.net/wSMfGvFzOAYRU_yVIfquAA==/2946691248081599.jpg?param=400y400'
         ..artistNames = ['郭顶'],
-      Song()
-        ..songSourceType = SongSourceType.network
-        ..wyyId = '1333151465'
-        ..trackName = 'Welcome To New York'
-        ..albumName = '1989'
-        ..albumImageUrl = 'http://p1.music.126.net/BWyYcboEZR_YgnKJooBQjg==/109951168132553125.jpg?param=400y400'
-        ..artistNames = ['Taylor Swift'],
-      Song()
-        ..songSourceType = SongSourceType.network
-        ..wyyId = '2059793928'
-        ..trackName = 'Speak Now (Taylor\'s Version)'
-        ..albumName = 'Speak Now (Taylor\'s Version)'
-        ..albumImageUrl = 'http://p2.music.126.net/3MQls4eG_yJR_HaYXPMWlA==/109951168728387752.jpg?param=400y400'
-        ..artistNames = ['Taylor Swift'],
-      Song()
-        ..songSourceType = SongSourceType.network
-        ..wyyId = '1333151467'
-        ..trackName = 'Blank Space'
-        ..albumName = '1989'
-        ..albumImageUrl = 'http://p1.music.126.net/BWyYcboEZR_YgnKJooBQjg==/109951168132553125.jpg?param=400y400'
-        ..artistNames = ['Taylor Swift'],
       Song()
         ..songSourceType = SongSourceType.network
         ..wyyId = '2059532170'

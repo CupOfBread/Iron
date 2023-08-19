@@ -6,19 +6,19 @@ import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
-import 'package:iron/common/models/MediaSourcePath.dart';
-import 'package:iron/common/models/Song.dart';
 import 'package:isar/isar.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:iron/common/models/MediaSourcePath.dart';
+import 'package:iron/common/models/Song.dart';
 import 'package:iron/components/song_list/logic.dart';
 import 'state.dart';
 
 class MediaSourceLogic extends GetxController {
   final MediaSourceState state = MediaSourceState();
-  final songListLogic = Get.put(SongListLogic());
+  final songListLogic = Get.find<SongListLogic>();
   final isar = GetIt.I<Isar>();
 
   Future<void> initPathList() async {
@@ -31,11 +31,16 @@ class MediaSourceLogic extends GetxController {
   Future<void> scanPaths(context) async {
     await Permission.storage.request();
     await Permission.audio.request();
-    var localAlbumImageBox = Hive.box('local_album_image');
+    final fileDirectory = await getApplicationDocumentsDirectory();
 
-    Loader.show(context, progressIndicator: const LinearProgressIndicator());
+    Loader.show(context, progressIndicator: const CircularProgressIndicator());
 
     List<MediaSourcePath> pathFromDB = await isar.mediaSourcePaths.filter().pathIsNotEmpty().findAll();
+
+    if (pathFromDB.isEmpty) {
+      Loader.hide();
+      return;
+    }
 
     state.paths = pathFromDB;
 
@@ -59,8 +64,10 @@ class MediaSourceLogic extends GetxController {
               await isar.songs.put(newSong);
             });
 
-            if (newSong.albumName != '' && localAlbumImageBox.get(newSong.albumName) == null) {
-              localAlbumImageBox.put(newSong.albumName, mediaData.albumArt);
+            final file = File('${fileDirectory.path}/${newSong.albumName}.jpg');
+
+            if (newSong.albumName != '' && mediaData.albumArt != null && await file.exists() == false) {
+              await file.writeAsBytes(mediaData.albumArt!.toList());
             }
           }
         }
@@ -113,9 +120,13 @@ class MediaSourceLogic extends GetxController {
     // await isar.writeTxn(() async {
     //   await isar.mediaSourcePaths.put(MediaSourcePath()..path = '''/storage/emulated/0/Music/Speak now/14 Long Live (Taylor's Version).m4a''');
     // });
-    await isar.writeTxn(() async {
-      await isar.mediaSourcePaths.put(MediaSourcePath()..path = '''/storage/emulated/0/Music/Speak now''');
-    });
+    // await isar.writeTxn(() async {
+    //   await isar.mediaSourcePaths.put(MediaSourcePath()..path = '''/storage/emulated/0/Music/Speak now''');
+    // });
+
+    final fileDirectory = await getApplicationDocumentsDirectory();
+    final file = File('${fileDirectory.path}/${fileDirectory.path}.jpg');
+
     update();
   }
 }

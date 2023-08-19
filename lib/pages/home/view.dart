@@ -8,6 +8,7 @@ import 'package:iron/pages/discover/view.dart';
 import 'package:iron/pages/my/view.dart';
 
 import 'package:iron/router/app_pages.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'logic.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,7 +19,6 @@ class HomePage extends StatelessWidget {
     final logic = Get.put(HomeLogic());
     final navLogic = Get.put(BottomBarLogic());
     final state = Get.find<HomeLogic>().state;
-    final navState = Get.find<BottomBarLogic>().state;
     final bottomBarLogic = Get.find<BottomBarLogic>();
 
     List<Widget> pages = const [const DiscoverPage(), const CabinetPage(), const MyPage()];
@@ -53,6 +53,27 @@ class HomePage extends StatelessWidget {
                         onTap: () {
                           Scaffold.of(context).closeEndDrawer();
                           Get.toNamed(AppRoutes.MediaSource);
+                        },
+                      );
+                    },
+                  ),
+                  Builder(
+                    builder: (context) {
+                      return ListTile(
+                        title: Text(
+                          '加载示例网络歌曲',
+                          style: TextStyle(fontWeight: FontWeight.w900, color: Colors.black87),
+                        ),
+                        leading: Image.asset(
+                          "assets/images/icon/media_source.png",
+                          width: 30,
+                          height: 30,
+                        ),
+                        onTap: () {
+                          logic.loadExampleData();
+                          MotionToast.success(
+                            description: const Text("加载成功，请重启APP！"),
+                          ).show(context);
                         },
                       );
                     },

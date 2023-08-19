@@ -3,16 +3,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:iron/common/models/Album.dart';
-import 'package:iron/common/models/Artist.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'state.dart';
 import 'package:iron/common/models/Song.dart';
 import 'package:iron/router/app_pages.dart';
-import 'package:isar/isar.dart';
-
-import 'package:iron/common/values/AlbumDataExample.dart';
-import 'package:iron/common/values/ArtistDataExample.dart';
-import 'package:iron/common/values/SongDataExample.dart';
-import 'state.dart';
 
 enum PlayerState { paused, playing, loading }
 
@@ -32,6 +28,8 @@ class BottomPlayerBarLogic extends GetxController {
   final BottomPlayerBarState state = BottomPlayerBarState();
   final isar = GetIt.I<Isar>();
   final dio = Dio();
+
+  late final applicationDocumentsDirectory;
 
   //当前播放音乐
   final currentSongNotifier = ValueNotifier<Song>(Song());
@@ -63,6 +61,7 @@ class BottomPlayerBarLogic extends GetxController {
   }
 
   void _init() async {
+    applicationDocumentsDirectory = await getApplicationDocumentsDirectory();
     _listenForChangesInPlayerPosition();
     _listenForChangesInPlayerState();
     _listenToChangesInSong();
@@ -152,6 +151,8 @@ class BottomPlayerBarLogic extends GetxController {
       if (currentSong.wyyId != '') {
         final response = await dio.get('http://192.168.1.12:3000/lyric?id=$currentSongId');
         currentSongLyricNotifier.value = response.data['lrc']['lyric'];
+      } else {
+        currentSongLyricNotifier.value = '';
       }
 
       _updateSkipButtons();
@@ -164,7 +165,7 @@ class BottomPlayerBarLogic extends GetxController {
         playlistNotifier.value = [];
         currentSongNotifier.value = Song();
       } else {
-        final newList = playlist.map((item) => item.title).toList();
+        final newList = playlist.map((item) => item.id).toList();
         playlistNotifier.value = newList;
       }
       _updateSkipButtons();
@@ -173,7 +174,8 @@ class BottomPlayerBarLogic extends GetxController {
 
   void _updateSkipButtons() {
     final mediaItem = _audioHandler.mediaItem.value;
-    final playlist = _audioHandler.queue.value;
+    var playlist = _audioHandler.queue.value;
+
     if (playlist.length < 2 || mediaItem == null) {
       isFirstSongNotifier.value = true;
       isLastSongNotifier.value = true;
@@ -218,21 +220,6 @@ class BottomPlayerBarLogic extends GetxController {
   Future<void> loadNewPlaylist(List<String> songIdList) async {
     await _audioHandler.updateQueue(songIdList.map((e) => MediaItem(id: e, title: e)).toList());
     _updateSkipButtons();
-  }
-
-  Future<void> loadExampleData() async {
-    final isar = GetIt.I<Isar>();
-    await isar.writeTxn(() async {
-      await isar.songs.putAll(SongDataExample().loadSongs());
-    });
-
-    await isar.writeTxn(() async {
-      await isar.artists.putAll(ArtistDataExample().loadArtist());
-    });
-
-    await isar.writeTxn(() async {
-      await isar.albums.putAll(AlbumDataExample().loadAlbums());
-    });
   }
 
 // Future<void> testLoadLocalSongs() async {

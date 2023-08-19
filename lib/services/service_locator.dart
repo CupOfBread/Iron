@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:iron/services/global_value.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -23,6 +24,7 @@ Future<void> setupServiceLocator() async {
   await Hive.initFlutter();
   await Hive.openBox('local_album_image');
 
+  GetIt.I.registerSingleton<GlobalValue>(GlobalValue());
   GetIt.I.registerSingleton<Isar>(isar);
   GetIt.I.registerSingleton<AudioHandler>(await initAudioService());
 }
