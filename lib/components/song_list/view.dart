@@ -50,14 +50,19 @@ class _SongListComponent extends State<SongListComponent> with AutomaticKeepAliv
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                           child: GetBuilder<SongListLogic>(builder: (logic) {
-                            return Text(
-                              '随机播放(' + state.songList.length.toString() + ')',
-                              style: TextStyle(
-                                fontFamily: 'NotoSerifSC',
-                                color: Color(0xFF696B5A),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
+                            return GestureDetector(
+                              child: Text(
+                                '随机播放(' + state.songList.length.toString() + ')',
+                                style: TextStyle(
+                                  fontFamily: 'NotoSerifSC',
+                                  color: Color(0xFF696B5A),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
+                              onTap: (){
+                                logic.test();
+                              },
                             );
                           }),
                         ),
@@ -150,7 +155,7 @@ class _SongListComponent extends State<SongListComponent> with AutomaticKeepAliv
                                               height: 54,
                                               fit: BoxFit.cover,
                                             )
-                                          :Image.file(File('${logic.applicationDocumentsDirectory.path}/${state.songList[index].albumName}.jpg'),
+                                          :Image.file(File('${logic.GLOBAL_VALUE.applicationDocumentsDirectory.path}/${state.songList[index].albumName}.jpg'),
                                         width: 54,
                                         height: 54,
                                         fit: BoxFit.cover,

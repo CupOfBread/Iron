@@ -9,7 +9,7 @@ import 'state.dart';
 
 class ArtistDetailLogic extends GetxController {
   final ArtistDetailState state = ArtistDetailState();
-  final bottomBarLogic = Get.put(BottomPlayerBarLogic());
+  final bottomBarLogic = Get.find<BottomPlayerBarLogic>();
 
   initArtistDetail(Map args) async {
     final isar = GetIt.I<Isar>();

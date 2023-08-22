@@ -16,7 +16,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final logic = Get.put(BottomPlayerBarLogic());
     final state = Get.find<BottomPlayerBarLogic>().state;
-    final playerBarLogic = Get.put(BottomPlayerBarLogic());
+    final playerBarLogic = Get.find<BottomPlayerBarLogic>();
 
     return Container(
       width: double.infinity,
@@ -70,7 +70,7 @@ class BottomPlayerBarComponent extends StatelessWidget {
                                     ),
                                   )
                                 : Image.file(
-                                    File('${logic.applicationDocumentsDirectory.path}/${value.albumName}.jpg'),
+                                    File('${logic.GLOBAL_VALUE.applicationDocumentsDirectory.path}/${value.albumName}.jpg'),
                                     width: 44,
                                     height: 44,
                                     fit: BoxFit.cover,

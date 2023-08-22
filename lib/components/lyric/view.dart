@@ -13,7 +13,7 @@ class LyricComponent extends StatefulWidget {
 
 class _LyricComponent extends State<LyricComponent> with AutomaticKeepAliveClientMixin {
   final logic = Get.put(LyricLogic());
-  final bottomPlayerBarLogic = Get.put(BottomPlayerBarLogic());
+  final bottomPlayerBarLogic = Get.find<BottomPlayerBarLogic>();
   final state = Get.find<LyricLogic>().state;
 
   var playing = false;

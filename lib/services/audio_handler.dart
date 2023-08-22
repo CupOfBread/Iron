@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:iron/common/models/Song.dart';
 import 'package:isar/isar.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:iron/services/global_value.dart';
 
 Future<AudioHandler> initAudioService() async {
   return await AudioService.init(
@@ -23,10 +23,10 @@ Future<AudioHandler> initAudioService() async {
 class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final dio = Dio();
   final isar = GetIt.I<Isar>();
+  final GLOBAL_VALUE = GetIt.I<GlobalValue>();
   final _player = AudioPlayer();
   final _playlist = ConcatenatingAudioSource(children: []);
   final localAlbumImageBox = Hive.box('local_album_image');
-  late final applicationDocumentsDirectory;
 
   MyAudioHandler() {
     _init();
@@ -39,7 +39,6 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   Future<void> _init() async {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
-    applicationDocumentsDirectory = await getApplicationDocumentsDirectory();
   }
 
   void _setInitialPlaylist() async {
@@ -138,7 +137,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
             artist: currentSong.artistNames[0],
             artUri: currentSong.songSourceType == SongSourceType.network
                 ? Uri.parse(currentSong.albumImageUrl)
-                : Uri.file('${applicationDocumentsDirectory.path}/${currentSong.albumName}.jpg')));
+                : Uri.file('${GLOBAL_VALUE.applicationDocumentsDirectory.path}/${currentSong.albumName}.jpg')));
       }
 
       queue.add(mediaItemList);

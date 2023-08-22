@@ -48,13 +48,6 @@ class SongDataExample {
         ..artistNames = ['郭顶'],
       Song()
         ..songSourceType = SongSourceType.network
-        ..wyyId = '1333151468'
-        ..trackName = 'Style'
-        ..albumName = '1989'
-        ..albumImageUrl = 'http://p1.music.126.net/BWyYcboEZR_YgnKJooBQjg==/109951168132553125.jpg?param=400y400'
-        ..artistNames = ['Taylor Swift'],
-      Song()
-        ..songSourceType = SongSourceType.network
         ..wyyId = '441491828'
         ..trackName = '水星记'
         ..albumName = '飞行器的执行周期'

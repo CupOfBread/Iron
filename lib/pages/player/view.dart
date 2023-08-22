@@ -18,7 +18,7 @@ class PlayerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final logic = Get.put(PlayerLogic());
     final state = Get.find<PlayerLogic>().state;
-    final playerBarLogic = Get.put(BottomPlayerBarLogic());
+    final playerBarLogic = Get.find<BottomPlayerBarLogic>();
 
     return DismissiblePage(
       onDismissed: () {

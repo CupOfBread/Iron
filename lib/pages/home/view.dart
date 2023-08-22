@@ -17,9 +17,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logic = Get.put(HomeLogic());
-    final navLogic = Get.put(BottomBarLogic());
     final state = Get.find<HomeLogic>().state;
-    final bottomBarLogic = Get.find<BottomBarLogic>();
+    final navLogic = Get.put(BottomBarLogic());
+    final bottomBarLogic = Get.put(BottomBarLogic());
 
     List<Widget> pages = const [const DiscoverPage(), const CabinetPage(), const MyPage()];
 
@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
                         onTap: () {
                           logic.loadExampleData();
                           MotionToast.success(
-                            description: const Text("加载成功，请重启APP！"),
+                            description: const Text("加载成功！"),
                           ).show(context);
                         },
                       );

@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 
+import 'package:iron/services/global_value.dart';
 import 'state.dart';
 import 'package:iron/common/models/Song.dart';
 import 'package:iron/router/app_pages.dart';
@@ -28,8 +28,7 @@ class BottomPlayerBarLogic extends GetxController {
   final BottomPlayerBarState state = BottomPlayerBarState();
   final isar = GetIt.I<Isar>();
   final dio = Dio();
-
-  late final applicationDocumentsDirectory;
+  final GLOBAL_VALUE = GetIt.I<GlobalValue>();
 
   //当前播放音乐
   final currentSongNotifier = ValueNotifier<Song>(Song());
@@ -61,7 +60,6 @@ class BottomPlayerBarLogic extends GetxController {
   }
 
   void _init() async {
-    applicationDocumentsDirectory = await getApplicationDocumentsDirectory();
     _listenForChangesInPlayerPosition();
     _listenForChangesInPlayerState();
     _listenToChangesInSong();
@@ -149,7 +147,7 @@ class BottomPlayerBarLogic extends GetxController {
       currentSongNotifier.value = currentSong;
 
       if (currentSong.wyyId != '') {
-        final response = await dio.get('http://192.168.1.12:3000/lyric?id=$currentSongId');
+        final response = await dio.get('http://192.168.1.17:3000/lyric?id=$currentSongId');
         currentSongLyricNotifier.value = response.data['lrc']['lyric'];
       } else {
         currentSongLyricNotifier.value = '';
