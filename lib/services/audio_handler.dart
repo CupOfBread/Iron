@@ -8,8 +8,10 @@ import 'package:isar/isar.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:iron/services/global_value.dart';
 
+late AudioHandler _audioHandler;
+
 Future<AudioHandler> initAudioService() async {
-  return await AudioService.init(
+  _audioHandler = await AudioService.init(
     builder: () => MyAudioHandler(),
     config: const AudioServiceConfig(
       androidNotificationChannelId: 'com.tystudio.ironmusic.audio',
@@ -18,6 +20,7 @@ Future<AudioHandler> initAudioService() async {
       androidStopForegroundOnPause: true,
     ),
   );
+  return _audioHandler;
 }
 
 class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
@@ -164,6 +167,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await _player.stop();
     return super.stop();
   }
+
 
   @override
   Future<void> updateQueue(List<MediaItem> queue) async {

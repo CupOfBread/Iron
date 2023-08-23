@@ -147,8 +147,12 @@ class BottomPlayerBarLogic extends GetxController {
       currentSongNotifier.value = currentSong;
 
       if (currentSong.wyyId != '') {
-        final response = await dio.get('http://192.168.1.17:3000/lyric?id=$currentSongId');
-        currentSongLyricNotifier.value = response.data['lrc']['lyric'];
+        try {
+          final response = await dio.get('http://192.168.1.17:3000/lyric?id=$currentSongId');
+          currentSongLyricNotifier.value = response.data['lrc']['lyric'];
+        } catch (e) {
+          currentSongLyricNotifier.value = '';
+        }
       } else {
         currentSongLyricNotifier.value = '';
       }
@@ -220,20 +224,11 @@ class BottomPlayerBarLogic extends GetxController {
     _updateSkipButtons();
   }
 
-// Future<void> testLoadLocalSongs() async {
-//   await Permission.storage.request();
-//   await Permission.audio.request();
-//
-//   final myDir = Directory("""/storage/emulated/0/Music/Speak now""");
-//
-//   final List<FileSystemEntity> list = await myDir.list().toList();
-//
-//   AudioSource audioSource = AudioSource.file(list[3].path, tag: '2059793928');
-//
-//   _playlist = ConcatenatingAudioSource(children: [audioSource]);
-//   _audioPlayer.setAudioSource(_playlist);
-//
-//   _audioPlayer.play();
-//   playerPlayButtonNotifier.value = PlayerState.playing;
-// }
+  void rewind() {
+    _audioHandler.rewind();
+  }
+
+  void fastForward() {
+    _audioHandler.fastForward();
+  }
 }

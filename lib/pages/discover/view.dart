@@ -44,10 +44,17 @@ class DiscoverPage extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(18, 0, 18, 0),
-              child: Icon(
-                Icons.sort_rounded,
-                size: 24,
-              ),
+              child: Builder(builder: (context) {
+                return IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                  icon: Icon(
+                    Icons.sort_rounded,
+                    size: 24,
+                  ),
+                );
+              }),
             ),
           ],
         ),

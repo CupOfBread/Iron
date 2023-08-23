@@ -107,7 +107,7 @@ class PlayerPage extends StatelessWidget {
                                         return Text(
                                           value.trackName,
                                           textAlign: TextAlign.start,
-                                          maxLines: 3,
+                                          maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontFamily: 'NotoSerifSC',
@@ -222,7 +222,7 @@ class PlayerPage extends StatelessWidget {
                                                   ),
                                                   IconButton(
                                                     onPressed: () {
-                                                      // playerBarLogic.testAudioService();
+                                                      playerBarLogic.rewind();
                                                     },
                                                     icon: Icon(
                                                       Icons.replay_10,
@@ -236,7 +236,9 @@ class PlayerPage extends StatelessWidget {
                                                       color: Color(0xFFF2F2F2),
                                                       size: 34,
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      playerBarLogic.fastForward();
+                                                    },
                                                   ),
                                                   IconButton(
                                                     icon: Icon(
